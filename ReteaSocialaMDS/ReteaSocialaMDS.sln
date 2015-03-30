@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReteaSocialaMDS", "ReteaSocialaMDS\ReteaSocialaMDS.csproj", "{5C4F32FA-B878-4AEA-B037-6BFCBB0EEB31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReteaSocialaMDS.Tests", "ReteaSocialaMDS.Tests\ReteaSocialaMDS.Tests.csproj", "{42A714DE-EA01-4313-BA7A-6D47382C27CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C4F32FA-B878-4AEA-B037-6BFCBB0EEB31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C4F32FA-B878-4AEA-B037-6BFCBB0EEB31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C4F32FA-B878-4AEA-B037-6BFCBB0EEB31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C4F32FA-B878-4AEA-B037-6BFCBB0EEB31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42A714DE-EA01-4313-BA7A-6D47382C27CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42A714DE-EA01-4313-BA7A-6D47382C27CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42A714DE-EA01-4313-BA7A-6D47382C27CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42A714DE-EA01-4313-BA7A-6D47382C27CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
