@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    Mesaj: @ViewBag.Message
+</p>
+<p>
+    Mesajul primit: @ViewBag.MessagePrimit
+</p>
+<p>
+    Varsta: @ViewBag.Varsta
+</p>
+<div class="jumbotron">
+    Ceva ceva ceva
+</div>
+
+
+    <div class="row">
+        <div class="col-xs-6 col-md-4">Asta este prima coloana Asta este prima coloana Asta este prima coloana Asta este prima coloana Asta este prima coloana</div>
+        <div class="col-xs-3 col-md-4">A doua coloana A doua coloana A doua coloana A doua coloana A doua coloana A doua coloana A doua coloana A doua coloana A doua coloana A doua coloana A doua coloana A doua coloana A doua coloana A doua coloana A doua coloana A doua coloana A doua coloana </div>
+        <div class="col-xs-6 col-md-4">A treia coloana A treia coloana A treia coloana A treia coloana A treia coloana A treia coloana A treia coloana A treia coloana A treia coloana A treia coloana A treia coloana A treia coloana </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <div id="result"></div>
+        </div>
+    </div>
+
+
+
+@section scripts {
+    <script type="text/javascript">
+$(function(){
+$("#result").load("/Teste/lista");
+});
+    </script>
+}
