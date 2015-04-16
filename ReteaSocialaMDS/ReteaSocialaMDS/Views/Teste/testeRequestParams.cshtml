@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "testeRequestParams";
+}
+@model ReteaSocialaMDS.Models.Teste.TesteIndexMVVM
+<h2>testeRequestParams</h2>
+<p>@ViewBag.nume</p>
+
+@using (Html.BeginForm("testeRequestParams", "Teste", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.ValidationSummary(true);
+    <div class="form-group">
+        @Html.LabelFor(m => Model.Nume)
+        @Html.EditorFor(m => Model.Nume, new { @class = "form-control" })
+        <button type="button" class="btn btn-default btn-sm">
+            <span class="badge">?</span>
+        </button>
+        @Html.ValidationMessageFor(m => Model.Nume)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => Model.Prenume)
+        @Html.EditorFor(m => Model.Prenume, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => Model.Prenume)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => Model.Varsta)
+        @Html.EditorFor(m => Model.Varsta)
+        @Html.ValidationMessageFor(m => Model.Varsta)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => Model.Admin)
+        @Html.EditorFor(m => Model.Admin)
+        @Html.ValidationMessageFor(m => Model.Admin)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => Model.EmailConfirmat)
+        @Html.EditorFor(m => Model.EmailConfirmat)
+        @Html.ValidationMessageFor(m => Model.EmailConfirmat)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => Model.VechimeForum)
+        @Html.EditorFor(m => Model.VechimeForum)
+        @Html.ValidationMessageFor(m => Model.VechimeForum)
+    </div>
+
+    <p><input type="submit" value="Save" /></p>
+}
