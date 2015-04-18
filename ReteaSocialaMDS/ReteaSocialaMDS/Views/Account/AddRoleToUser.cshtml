@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "AddRoleToUser";
+}
+
+<h2>AddRoleToUser</h2>
+
+@using (Html.BeginForm("AddRoleToUser","Account"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <div class="form-group">
+        <div class="col-md-6 ">
+            @Html.DropDownList("Email", ViewBag.userNames as SelectList)
+        </div>
+        <div class="col-md-6">
+            @Html.DropDownList("RoleName", ViewBag.rolesName as SelectList)
+        </div>
+    </div>
+    <input type="submit" value="Add this role to this user"/>
+
+}
+@using (Html.BeginForm("DeleteRoleFromUser", "Account"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <div class="form-group">
+        <div class="col-md-6 ">
+            @Html.DropDownList("Email", ViewBag.userNames as SelectList)
+        </div>
+        <div class="col-md-6">
+            @Html.DropDownList("RoleName", ViewBag.rolesName as SelectList)
+        </div>
+    </div>
+    <input type="submit" value="Remeove this role from the user" />
+}

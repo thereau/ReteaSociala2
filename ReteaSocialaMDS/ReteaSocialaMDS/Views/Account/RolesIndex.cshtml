@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Roles Index";
+}
+
+<h2>RolesIndex</h2>
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Roles index</div>
+        <div class="panel-body">
+            <p>
+                The list of roles defined in Retea Sociala MDS
+            </p>
+        </div>
+        <ul class="list-group">
+            @foreach (string roleName in Model)
+            {
+                <li class="list-group-item">
+                    @roleName
+                </li>
+                <li class="list-group-item">
+                    <a href="/Account/DeleteRole?roleName=@roleName">Delete @roleName</a>
+                </li>
+
+
+            }
+        </ul>
+       
+    </div>
+        
+  
+</div>

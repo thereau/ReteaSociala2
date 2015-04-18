@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ReteaSocialaMDS.Models;
@@ -481,5 +484,206 @@ namespace ReteaSocialaMDS.Controllers
             }
         }
         #endregion
+        #region RoleManager
+        /// <summary>
+        /// When the controller is accesed by HttpGET by an Admin
+        /// </summary>
+        /// <returns>
+        /// A View with a form to create a new role
+        /// </returns>
+        [Authorize(Roles="Admin")]
+        [HttpGet]
+        public ActionResult CreateRole()
+        {
+            return View();
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateRole(string roleName)
+        {
+            //ApplicationDbContext is the a classe is used by the ASP.NET Identity to manage user records
+            var context = new ApplicationDbContext();
+            var roleStore = new RoleStore<IdentityRole>(context);
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+            roleManager.Create(new IdentityRole(roleName));
+            context.SaveChanges();
+            //should redirect to this controllex, RolesIndex() method
+            return RedirectToAction("RolesIndex", "Account");
+        }
+        [Authorize(Roles = "Admin")]
+        public ActionResult RolesIndex()
+        {
+            //ApplicationDbContext is the a classe is used by the ASP.NET Identity to manage user records
+            var context = new ApplicationDbContext();
+            var roleStore = new RoleStore<IdentityRole>(context);
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+            //I use List and not IList because this code won't be exposed to other developers
+            List<string> rolesName = (from role in roleManager.Roles select role.Name).
+            ToList();
+
+            return View(rolesName);
+        }
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteRole(string roleName)
+        {
+            //ApplicationDbContext is the a classe is used by the ASP.NET Identity to manage user records
+            var context = new ApplicationDbContext();
+            var roleStore = new RoleStore<IdentityRole>(context);
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+            var deletedRole = roleManager.FindByName(roleName);
+            roleManager.Delete(deletedRole);
+            return RedirectToAction("RolesIndex", "Account");
+        }
+        [Authorize(Roles = "Admin")]
+        public ActionResult UsersIndex()
+        {
+            var context = new ApplicationDbContext();
+            var userStore = new UserStore<ApplicationUser>(context);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+            List<String> userNames = (from user in userManager.Users select user.Email).ToList();   
+            return View(userNames);
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public ActionResult AddRoleToUser()
+        {
+            var context = new ApplicationDbContext();
+
+            var userStore = new UserStore<ApplicationUser>(context);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+ 
+            var roleStore = new RoleStore<IdentityRole>(context);
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+           
+            List<String> rolesName = (from role in roleManager.Roles select role.Name).ToList();
+            List<String> userNames= (from user in userManager.Users select user.Email).ToList();
+
+            ViewBag.rolesName = new SelectList(rolesName);
+            ViewBag.userNames = new SelectList(userNames);
+
+            return View();
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public ActionResult DeleteRoleFromUser()
+        {
+            return RedirectToAction("AddRoleToUser", "Account");
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddRoleToUser(string Email, string RoleName)
+        {
+            var context = new ApplicationDbContext();
+
+            var userStore = new UserStore<ApplicationUser>(context);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            var roleStore = new RoleStore<IdentityRole>(context);
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+            var user = userManager.FindByEmail(Email);
+            if (user != null)
+            {
+                var role = roleManager.FindByName(RoleName);
+                if (role != null)
+                {
+                    if (!userManager.IsInRole(user.Id, role.Name))
+                    {
+                        userManager.AddToRole(user.Id, role.Name);
+                        context.SaveChanges();
+                    }
+                }
+            }
+
+            return RedirectToAction("RolesIndex", "Account");
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteRoleFromUser(string userName, string roleName)
+        {
+            var context = new ApplicationDbContext();
+
+            var userStore = new UserStore<ApplicationUser>(context);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            var roleStore = new RoleStore<IdentityRole>(context);
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+            var user = userManager.FindByEmail(userName);
+            if (user != null)
+            {
+                var role = roleManager.FindByName(roleName);
+                if (role != null)
+                {
+                    if (userManager.IsInRole(user.Id, role.Name))
+                    {
+                        userManager.RemoveFromRole(user.Id, role.Name);
+                        context.SaveChanges();
+                    }
+                }
+            }
+
+            return RedirectToAction("RolesIndex", "Account");
+        }
+
+        [Authorize(Roles="Admin")]
+        [HttpGet]
+        public ActionResult GetRolesForAUser()
+        {
+            var context = new ApplicationDbContext();
+
+            var userStore = new UserStore<ApplicationUser>(context);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+           
+            List<String> userNames = (from user in userManager.Users select user.Email).ToList();
+            
+            ViewBag.userNames = new SelectList(userNames);
+
+            return View();
+          
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult GetRolesForAUser(string userName)
+        {
+            if(string.IsNullOrWhiteSpace(userName))
+                return Json("userul nu a fost gasit/ nu are roluri");
+            var context = new ApplicationDbContext();
+
+            var userStore = new UserStore<ApplicationUser>(context);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            var roleStore = new RoleStore<IdentityRole>(context);
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+            var user = userManager.FindByEmail(userName);
+            List<String> rolesName = (from role in roleManager.Roles select role.Name).ToList();
+            List<String> userNames = (from us in userManager.Users select us.Email).ToList();
+
+            if (user != null)
+            {
+                var userRolesIds = (from role in user.Roles select role.RoleId).ToList();
+                var userRoles = (from roleId in userRolesIds let role = roleManager.FindById(roleId) select role.Name).ToList();
+                return Json(userRoles);
+
+            }
+            else
+            {
+                return Json("userul nu a fost gasit/ nu are roluri");
+            }
+
+            
+        }
+        #endregion
     }
+    
+
 }

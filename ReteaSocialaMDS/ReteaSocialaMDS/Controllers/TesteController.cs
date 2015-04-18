@@ -10,6 +10,7 @@ namespace ReteaSocialaMDS.Controllers
     public class TesteController : Controller
     {
         // GET: Teste
+        [Authorize]
         public ViewResult Index(String mesaj, int varsta=0)
         {
             ViewBag.MessagePrimit = mesaj;

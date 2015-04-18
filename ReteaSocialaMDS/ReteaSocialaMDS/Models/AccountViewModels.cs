@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ReteaSocialaMDS.Models
@@ -79,6 +80,17 @@ namespace ReteaSocialaMDS.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [DataType(DataType.MultilineText)]
+        public string Adress { get; set; }
+
+        [DataType(DataType.Text)]
+        [Display(Name = "Twitter Handle")]
+        public string TwitterHandle { get; set; }
+
+        [DataType(DataType.DateTime)]
+        [Display(Name = "Birth date")]
+        public DateTime BirthDate { get; set; }
     }
 
     public class ResetPasswordViewModel

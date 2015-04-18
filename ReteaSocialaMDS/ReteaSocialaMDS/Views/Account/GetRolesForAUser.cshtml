@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "GetRolesForAUser";
+}
+
+<h2>GetRolesForAUser</h2>
+<div class="row">
+    @using (Ajax.BeginForm(
+        new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnSuccess = "OnSuccess",
+            OnFailure = "OnFailure",
+            Url = "Account/GetRolesForAUser",
+            UpdateTargetId = "userRolesAjax",
+            InsertionMode = InsertionMode.Replace
+            
+        }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+        <fieldset>
+            <div class="form-group">
+                <div class="col-md-6 ">
+                    @Html.DropDownList("Email", ViewBag.userNames as SelectList)
+                </div>
+            </div>
+            <input type="submit" value="Get roles for this user" />
+        </fieldset>
+    }
+</div>
+<div class="row" id="userRolesAjax">
+
+</div>
+<script type="text/javascript">
+    function OnSuccess(response) {
+        console.log(response);
+    }
+    function OnFailure(response) {
+        console.log("eroare");
+        console.log(response);
+    }
+</script>
