@@ -81,16 +81,37 @@ namespace ReteaSocialaMDS.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [DataType(DataType.MultilineText)]
-        public string Adress { get; set; }
-
+        [StringLength(30), Required]
+        [Display(Name = "First name")]
         [DataType(DataType.Text)]
+        public string FirstName { get; set; }
+
+
+        [StringLength(30), Required]
+        [Display(Name = "Last name")]
+        [DataType(DataType.Text)]
+        public string LastName { get; set; }
+
+
+        [StringLength(100), Required]
+        [DataType(DataType.MultilineText)]
+        public string AdressName { get; set; }
+
+
+        [StringLength(15)]
         [Display(Name = "Twitter Handle")]
+        [DataType(DataType.Text)]
         public string TwitterHandle { get; set; }
 
-        [DataType(DataType.DateTime)]
+      
         [Display(Name = "Birth date")]
+        [DataType(DataType.DateTime)]
         public DateTime BirthDate { get; set; }
+
+       
+        [Display(Name = "Accout creation date and time")]
+        [DataType(DataType.DateTime)]
+        public DateTime AccountCreation { get; set; }
     }
 
     public class ResetPasswordViewModel

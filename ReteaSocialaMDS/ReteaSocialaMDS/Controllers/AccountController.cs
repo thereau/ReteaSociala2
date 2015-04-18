@@ -154,7 +154,18 @@ namespace ReteaSocialaMDS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    AdressName = model.AdressName,
+                    TwitterHandle = model.TwitterHandle,
+                    BirthDate = model.BirthDate,
+                    AccountCreation = model.BirthDate,
+
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -651,11 +662,15 @@ namespace ReteaSocialaMDS.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
+        
         [ValidateAntiForgeryToken]
         public JsonResult GetRolesForAUser(string userName)
         {
+            //userName = Request.Params["Email"];
+
             if(string.IsNullOrWhiteSpace(userName))
-                return Json("userul nu a fost gasit/ nu are roluri");
+                return Json("userul nu a fost gasit/ nu are roluri: "+userName);
+            
             var context = new ApplicationDbContext();
 
             var userStore = new UserStore<ApplicationUser>(context);
@@ -665,6 +680,7 @@ namespace ReteaSocialaMDS.Controllers
             var roleManager = new RoleManager<IdentityRole>(roleStore);
 
             var user = userManager.FindByEmail(userName);
+            
             List<String> rolesName = (from role in roleManager.Roles select role.Name).ToList();
             List<String> userNames = (from us in userManager.Users select us.Email).ToList();
 
@@ -673,6 +689,7 @@ namespace ReteaSocialaMDS.Controllers
                 var userRolesIds = (from role in user.Roles select role.RoleId).ToList();
                 var userRoles = (from roleId in userRolesIds let role = roleManager.FindById(roleId) select role.Name).ToList();
                 return Json(userRoles);
+                
 
             }
             else

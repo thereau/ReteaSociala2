@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -11,9 +12,32 @@ namespace ReteaSocialaMDS.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-        public string Adress { get; set; }
+        [Required]
+        public string FirstName { get; set; }
+       
+       
+        [Required]
+        public string LastName { get; set; }
+
+        
+        [Required]
+        public string AdressName { get; set; }
+       
+        
+        
         public string TwitterHandle { get; set; }
+       
+        
+       
         public DateTime BirthDate { get; set; }
+        
+
+       
+        public DateTime AccountCreation { get; set; }
+
+
+       
+        
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -23,6 +47,8 @@ namespace ReteaSocialaMDS.Models
         }
     }
 
+    //manage the interaction between ReteaSocialaMDS and the database where the Account data is persisted
+    //We can use another database for this
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()

@@ -3,6 +3,7 @@
 }
 
 <h2>GetRolesForAUser</h2>
+
 <div class="row">
     @using (Ajax.BeginForm(
         new AjaxOptions
@@ -10,9 +11,11 @@
             HttpMethod = "POST",
             OnSuccess = "OnSuccess",
             OnFailure = "OnFailure",
-            Url = "Account/GetRolesForAUser",
-            UpdateTargetId = "userRolesAjax",
-            InsertionMode = InsertionMode.Replace
+            //OnBegin = "alert('A inceput sa transmita')",
+            //OnComplete = "alert('A terminat transmisia')",
+            //Url = "Account/GetRolesForAUser",
+            //UpdateTargetId = "userRolesAjax",
+            //InsertionMode = InsertionMode.Replace
             
         }))
     {
@@ -21,7 +24,7 @@
         <fieldset>
             <div class="form-group">
                 <div class="col-md-6 ">
-                    @Html.DropDownList("Email", ViewBag.userNames as SelectList)
+                    @Html.DropDownList("userName", ViewBag.userNames as SelectList)
                 </div>
             </div>
             <input type="submit" value="Get roles for this user" />
@@ -33,10 +36,23 @@
 </div>
 <script type="text/javascript">
     function OnSuccess(response) {
-        console.log(response);
-    }
+        var content = "<div class=\"row\">";
+        content += "<div class=\"panel panel-primary\">";
+        content += "<div class=\"panel-heading\">User roles</div>";
+        content += "<div class=\"panel-body\">";
+        content += "<p>The list of roles for a user</p></div><ul class=\"list-group\">";
+        $.each(response, function (key, value) {
+
+                content += "<li class=\"list-group-item\">" + value + "</li>";
+                console.log(key + " -- " + value);
+            }
+        );
+        content += "</ul></div></div>";
+        $("#userRolesAjax").append(content);
+    };
     function OnFailure(response) {
         console.log("eroare");
         console.log(response);
-    }
+        
+    };
 </script>
