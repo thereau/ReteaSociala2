@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ReteaSocialaMDS.Models;
 
 namespace ReteaSocialaMDS.Controllers
 {
@@ -25,6 +26,17 @@ namespace ReteaSocialaMDS.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult Search(string userName)
+        {
+            return View();
+        }
+
+        public ActionResult NewPost()
+        {
+            var model = new PostViewModel();
+            return PartialView("_NewPost",model);
         }
     }
 }
