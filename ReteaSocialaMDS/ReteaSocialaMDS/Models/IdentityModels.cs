@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using System.Dynamic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -35,6 +38,8 @@ namespace ReteaSocialaMDS.Models
        
         public DateTime AccountCreation { get; set; }
 
+        public virtual ICollection<UserImage> UserImages { get; set; }
+
 
        
         
@@ -55,6 +60,8 @@ namespace ReteaSocialaMDS.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+
+        public DbSet<UserImage> UserImage { get; set; } 
 
         public static ApplicationDbContext Create()
         {
