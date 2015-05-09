@@ -6,58 +6,76 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("PageScripts", required: false)
 
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="container-fluid">
             <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img alt="Brand" src="~/Images/evernote-32.png">
+                </a>
+
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+
                 </button>
-                @Html.ActionLink("Retea sociala MDS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+                @Html.ActionLink("Retea sociala MDS", "Index", "Home", new {area = ""}, new {@class = "navbar-brand"})
+                
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            </ul>
+            @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @class = "navbar-form navbar-left", role = "search" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search for a user" name="userName">
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            }
+            @Html.Partial("_LoginPartial")
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <nav>
-            @if (IsSectionDefined("Nav"))
-            {
-                @RenderSection("Nav", required: false)
-            }
-            else
-            {
-                <ul>
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            }
-            
-        </nav>
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+</div>
+<div class="container-fluid body-content">
     
-    @Scripts.Render("~/bundles/jquery")
-    
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/MicrosoftAjax")
-    @Scripts.Render("~/bundles/MicrosoftMvcAjax")
-    @Scripts.Render("~/bundles/MicrosoftMvcValidation")
-    @RenderSection("scripts", required: false)
+    @RenderBody()
+    <nav>
+        @if (IsSectionDefined("Nav"))
+        {
+            @RenderSection("Nav", required: false)
+        }
+        else
+        {
+            <ul>
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            </ul>
+        }
+
+    </nav>
+    <hr/>
+    <footer>
+        <p>&copy; @DateTime.Now.Year -Retea Sociala MDS</p>
+    </footer>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/MicrosoftAjax")
+@Scripts.Render("~/bundles/MicrosoftMvcAjax")
+@Scripts.Render("~/bundles/MicrosoftMvcValidation")
+@Scripts.Render("~/bundles/imagesloaded")
+@Scripts.Render("~/bundles/masonry")
+@RenderSection("scripts", required: false)
 </body>
 </html>

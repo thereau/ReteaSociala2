@@ -1,9 +1,15 @@
 ﻿@model ReteaSocialaMDS.Models.RegisterViewModel
 @{
     ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_RegisterLayout.cshtml";
 }
 
+
+
+
 <h2>@ViewBag.Title.</h2>
+
+
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -14,7 +20,13 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control",placeholder="Emailul tau" })
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-envelope"></i>
+                </span>
+                @Html.TextBoxFor(m => m.Email, new {@class = "form-control", placeholder = "Emailul tau"})
+            </div>
+            
         </div>
     </div>
     <div class="form-group">
@@ -32,13 +44,25 @@
     <div class="form-group">
         @Html.LabelFor(m => m.FirstName, new {@class = "col-md-2 control-label"})
         <div class="col-md-10">
-            @Html.EditorFor(m => m.FirstName, new {@class = "form-control"})
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-user"></i>
+                </span>
+                @Html.EditorFor(m => m.FirstName, new { @class = "form-control" })
+            </div>
+            
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.EditorFor(m => m.LastName, new { @class = "form-control" })
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-user"></i>
+                </span>
+                @Html.EditorFor(m => m.LastName, new { @class = "form-control" })
+            </div>
+            
         </div>
     </div>
     <div class="form-group">
@@ -53,16 +77,14 @@
             @Html.EditorFor(m => m.AdressName, new {@class = "form-control"})
         </div>
     </div>
-    <div class="input-group date">
+    
+    
+    
+    
+    <div class="form-group">
         @Html.LabelFor(m => m.BirthDate, new {@class = "col-md-2 control-label"})
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.BirthDate, new {@class = "form-control"})
-        </div>
-    </div>
-    <div class="input-group date">
-        @Html.LabelFor(m => m.AccountCreation, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.AccountCreation, new { @class = "form-control" })
+            @Html.EditorFor(m => m.BirthDate, new {@class = "form-control"})
         </div>
     </div>
     <div class="form-group">
@@ -74,4 +96,28 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+    $(function () {
+        /*$("#datepicker").datepicker({
+            altFormat: "yy-mm-dd"
+        });*/
+        $("input[name='BirthDate']").datepicker({
+            dateFormat: "yy-mm-dd",
+            duration: "slow",
+            onClose: function(date) {
+                alert(date);
+            },
+            onSelect: function(date) {
+            alert(date);
+        }
+        });
+        $("form").validate(
+        {
+            
+        });
+
+    });
+    
+</script>
+
 }

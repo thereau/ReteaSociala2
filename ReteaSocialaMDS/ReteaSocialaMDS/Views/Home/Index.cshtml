@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Microsoft.AspNet.Identity
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -6,22 +7,103 @@
 
 
 <div class="row">
-    <div class="col-md-2" >
-        <ul class="nav nav-stacked affix" style="padding-top: 10px;">
-            <li>
-                Unu
-            </li>
-            <li>
-                Doi
-            </li>
-            <li>
-                trei
-            </li>
-            <li>patru si ceva</li>
-        </ul>
+    <div class="col-md-4 ">
+        
+        <div class="container nav nav-stacked affix" style="padding-top: 10px">
+            <div class=" row">
+            <div class="col-lg-5 col-md-4 col-sm-8 col-xs-9 bhoechie-tab-container">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item active text-center">
+                            <h4 class="glyphicon glyphicon-envelope"></h4><br />Inbox
+                        </a>
+                        <a href="#" class="list-group-item text-center">
+                            <h4 class="glyphicon glyphicon-road"></h4><br />Something
+                        </a>
+                        <a href="#" class="list-group-item text-center">
+                            <h4 class="glyphicon glyphicon-home"></h4><br />Home
+                        </a>
+                        <a href="#" class="list-group-item text-center">
+                            <h4 class="glyphicon glyphicon-cutlery"></h4><br />Something
+                        </a>
+                        <a href="#" class="list-group-item text-center">
+                            <h4 class="glyphicon glyphicon-cog"></h4><br />Settings
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bhoechie-tab">
+                    <!-- flight section -->
+                    <div class="bhoechie-tab-content active">
+                        <center>
+                            <h1 class="glyphicon glyphicon-envelope" style="font-size:14em;color:#55518a"></h1>
+                            <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
+                            <h3 style="margin-top: 0;color:#55518a">Inbox</h3>
+                        </center>
+                    </div>
+                    <!-- train section -->
+                    <div class="bhoechie-tab-content">
+                        <center>
+                            <h1 class="glyphicon glyphicon-road" style="font-size:12em;color:#55518a"></h1>
+                            <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
+                            <h3 style="margin-top: 0;color:#55518a">Train Reservation</h3>
+                        </center>
+                    </div>
 
+                    <!-- hotel search -->
+                    <div class="bhoechie-tab-content">
+                        <center>
+                            <h1 class="glyphicon glyphicon-home" style="font-size:12em;color:#55518a"></h1>
+                            <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
+                            <h3 style="margin-top: 0;color:#55518a">Hotel Directory</h3>
+                        </center>
+                    </div>
+                    <div class="bhoechie-tab-content">
+                        <center>
+                            <h1 class="glyphicon glyphicon-cutlery" style="font-size:12em;color:#55518a"></h1>
+                            <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
+                            <h3 style="margin-top: 0;color:#55518a">Restaurant Diirectory</h3>
+                        </center>
+                    </div>
+                    <div class="bhoechie-tab-content">
+                        <center>
+                            <h1 class="glyphicon glyphicon-cog" style="font-size:12em;color:#55518a"></h1>
+                            <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
+                            <h3 style="margin-top: 0;color:#55518a">Credit Card</h3>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+       
     </div>
-    <div class="col-md-8">
+    <div class="col-md-5">
+
+        <div role="tabpanel">
+
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#post" aria-controls="post" role="tab" data-toggle="tab">New post</a></li>
+                <li role="presentation"><a href="#photo" aria-controls="photo" role="tab" data-toggle="tab">New photo</a></li>
+                <li role="presentation"><a href="#file" aria-controls="file" role="tab" data-toggle="tab">New file</a></li>
+
+            </ul>
+
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="post">
+                    @Html.Partial("_NewPost")
+                </div>
+                <div role="tabpanel" class="tab-pane" id="photo">
+                    Gigel poate e pe camp
+                </div>
+                <div role="tabpanel" class="tab-pane" id="file">
+                    Gigel nu e pe camp
+                </div>
+
+            </div>
+
+        </div>
+
         Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
         Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
         Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
@@ -102,7 +184,7 @@
         Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-2 col-md-offset-1">
 
     </div>
 </div>
@@ -110,4 +192,30 @@
     <ul class="pager">
         <li><a href="#">Load more</a></li>
     </ul>
+}
+@section Scripts{
+    <script type="text/javascript">
+        $(function() {
+            $('#myTab a').click(function(e) {
+                e.preventDefault()
+                $(this).tab('show')
+            })
+        });
+        $(document).ready(function () {
+            $("div.bhoechie-tab-menu>div.list-group>a").click(function (e) {
+                e.preventDefault();
+
+                //dezactivate the active class for the siblings of the new active button 
+                $(this).siblings('a.active').removeClass("active");
+                $(this).addClass("active", 500, "easeInCubic");
+
+                //dezactivate the active class for the siblings of the new active button 
+                var index = $(this).index();
+                $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+                $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+            });
+        });
+    </script>
+    
+
 }

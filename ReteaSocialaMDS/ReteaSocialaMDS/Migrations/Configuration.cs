@@ -45,6 +45,7 @@ namespace ReteaSocialaMDS.Migrations
                 BirthDate = DateTime.Now,
                 AccountCreation = DateTime.Now,
             };
+            
             manager.Create(user1, "1234--Aa");
             var user2 = new ApplicationUser
             {

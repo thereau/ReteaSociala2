@@ -100,6 +100,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
     </Reference>
+    <Reference Include="Mvc.RazorTools, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mvc.RazorTools.Base.1.0.5\lib\net45\Mvc.RazorTools.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mvc.RazorTools.FontAwesome, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mvc.RazorTools.FontAwesome.4.3.0.0\lib\net45\Mvc.RazorTools.FontAwesome.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -169,6 +177,10 @@
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0.6\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -183,11 +195,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\Razor Tools\FontAwesome.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImageModelsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TesteController.cs" />
     <Compile Include="Global.asax.cs">
@@ -205,22 +219,157 @@
     <Compile Include="Migrations\201504181934307_adauga-coloane.Designer.cs">
       <DependentUpon>201504181934307_adauga-coloane.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504181944384_FaraSchimbariPentruSeed.cs" />
+    <Compile Include="Migrations\201504181944384_FaraSchimbariPentruSeed.Designer.cs">
+      <DependentUpon>201504181944384_FaraSchimbariPentruSeed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505022242421_AddingUserImages.cs" />
+    <Compile Include="Migrations\201505022242421_AddingUserImages.Designer.cs">
+      <DependentUpon>201505022242421_AddingUserImages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505062301132_UserFriends.cs" />
+    <Compile Include="Migrations\201505062301132_UserFriends.Designer.cs">
+      <DependentUpon>201505062301132_UserFriends.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505062306118_RemoveUserFriends.cs" />
+    <Compile Include="Migrations\201505062306118_RemoveUserFriends.Designer.cs">
+      <DependentUpon>201505062306118_RemoveUserFriends.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505062308529_NewUserFriends.cs" />
+    <Compile Include="Migrations\201505062308529_NewUserFriends.Designer.cs">
+      <DependentUpon>201505062308529_NewUserFriends.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505062311435_NewUserFriendsTwo.cs" />
+    <Compile Include="Migrations\201505062311435_NewUserFriendsTwo.Designer.cs">
+      <DependentUpon>201505062311435_NewUserFriendsTwo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Groups.cs" />
+    <Compile Include="Models\CheckDate.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Friend.cs" />
+    <Compile Include="Models\FriendRequest.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ImageDetailsViewModel.cs" />
+    <Compile Include="Models\ImageViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PostViewModel.cs" />
+    <Compile Include="Models\ReteaSocialaMDSContext.cs" />
     <Compile Include="Models\Teste\TesteIndexMVVM.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\ImageModel.cs" />
+    <Compile Include="Models\UserImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-datepicker3.css" />
+    <Content Include="Content\bootstrap-datepicker3.min.css" />
+    <Content Include="Content\bootstrap-datepicker3.standalone.css" />
+    <Content Include="Content\bootstrap-datepicker3.standalone.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\locales\bootstrap-datepicker.ar.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.az.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.bg.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.bs.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.ca.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.cs.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.cy.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.da.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.de.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.el.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.en-GB.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.es.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.et.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.eu.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.fa.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.fi.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.fo.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.fr-CH.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.fr.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.gl.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.he.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.hr.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.hu.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.hy.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.id.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.is.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.it-CH.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.it.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.ja.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.ka.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.kh.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.kk.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.kr.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.lt.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.lv.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.me.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.mk.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.ms.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.nb.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.nl-BE.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.nl.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.no.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.pl.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.pt-BR.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.pt.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.ro.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.rs-latin.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.rs.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.ru.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.sk.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.sl.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.sq.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.sr-latin.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.sr.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.sv.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.sw.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.th.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.tr.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.uk.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.vi.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.zh-CN.min.js" />
+    <Content Include="Content\locales\bootstrap-datepicker.zh-TW.min.js" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -231,20 +380,54 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="App_Code\Teste.cshtml" />
+    <Content Include="App_Readme\Handlebarsjs_README.md" />
+    <Content Include="App_Readme\Handlebarsjs_LICENSE" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Icon.png" />
+    <Content Include="Images\evernote-128.png" />
+    <Content Include="Images\evernote-32.png" />
+    <Content Include="Images\evernote-48.png" />
+    <Content Include="Images\evernote-64.png" />
+    <Content Include="Scripts\behaviors\cufon.js" />
+    <Content Include="Scripts\behaviors\local.js" />
+    <Content Include="Scripts\behaviors\manual-trigger.js" />
+    <Content Include="Scripts\behaviors\masonry-isotope.js" />
+    <Content Include="Scripts\behaviors\sausage.js" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\ember.debug.js" />
+    <Content Include="Scripts\ember.min.js" />
+    <Content Include="Scripts\ember.prod.js" />
+    <Content Include="Scripts\handlebars.amd.js" />
+    <Content Include="Scripts\handlebars.amd.min.js" />
+    <Content Include="Scripts\handlebars.js" />
+    <Content Include="Scripts\handlebars.min.js" />
+    <Content Include="Scripts\handlebars.runtime.amd.js" />
+    <Content Include="Scripts\handlebars.runtime.amd.min.js" />
+    <Content Include="Scripts\handlebars.runtime.js" />
+    <Content Include="Scripts\handlebars.runtime.min.js" />
+    <Content Include="Scripts\imagesloaded.pkgd.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
     <Content Include="Scripts\jquery-2.1.3.min.js" />
     <Content Include="Scripts\jquery-2.1.3.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
+    <Content Include="Scripts\jquery.infinitescroll.js" />
+    <Content Include="Scripts\jquery.infinitescroll.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\masonry.pkgd.min.js" />
     <Content Include="Scripts\MicrosoftAjax.debug.js" />
     <Content Include="Scripts\MicrosoftAjax.js" />
     <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
@@ -258,6 +441,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Video\video-background.mp4" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -300,9 +484,22 @@
     <Content Include="Views\Account\UsersIndex.cshtml" />
     <Content Include="Views\Account\AddRoleToUser.cshtml" />
     <Content Include="Views\Account\GetRolesForAUser.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\_RegisterLayout.cshtml" />
+    <Content Include="Views\Account\UserDetails.cshtml" />
+    <Content Include="Views\Home\_NewPost.cshtml" />
+    <Content Include="Views\ImageModels\Create.cshtml" />
+    <Content Include="Views\ImageModels\Delete.cshtml" />
+    <Content Include="Views\ImageModels\Details.cshtml" />
+    <Content Include="Views\ImageModels\Edit.cshtml" />
+    <Content Include="Views\ImageModels\Index.cshtml" />
+    <Content Include="Views\Home\CreateUserImage.cshtml" />
+    <Content Include="Views\Home\UserImagesList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\Users\" />
+    <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -317,6 +514,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504181934307_adauga-coloane.resx">
       <DependentUpon>201504181934307_adauga-coloane.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504181944384_FaraSchimbariPentruSeed.resx">
+      <DependentUpon>201504181944384_FaraSchimbariPentruSeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505022242421_AddingUserImages.resx">
+      <DependentUpon>201505022242421_AddingUserImages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505062301132_UserFriends.resx">
+      <DependentUpon>201505062301132_UserFriends.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505062306118_RemoveUserFriends.resx">
+      <DependentUpon>201505062306118_RemoveUserFriends.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505062308529_NewUserFriends.resx">
+      <DependentUpon>201505062308529_NewUserFriends.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505062311435_NewUserFriendsTwo.resx">
+      <DependentUpon>201505062311435_NewUserFriendsTwo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

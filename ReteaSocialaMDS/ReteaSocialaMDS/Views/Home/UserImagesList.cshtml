@@ -4,7 +4,7 @@
 }
 
 
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <button type="button" class="btn btn-success" id="ajaxImages">Load more images</button>
     </div>
@@ -71,8 +71,10 @@
 
                         $container.append(elements);
                             $container.imagesLoaded(function() {
-                                $container.masonry();
-                                $container.masonry('appended', (elements)); //as told above
+                                $container.masonry('reloadItems');
+                                $container.masonry('layout');
+                             
+                              
                             });
 
                         }

@@ -25,7 +25,7 @@ namespace ReteaSocialaMDS.Controllers
         }
 
         [HttpGet]
-        public ViewResult testeRequestParams()
+        public ActionResult testeRequestParams()
         {
             //In ASP.NET, the Request.Params dictionary results from the combination of four distinct dictionaries: QueryString, Form, Cookies, and ServerVariables.
             var nume = Request.Params["nume"] ?? "nu a fost transmis un nume";
@@ -38,7 +38,7 @@ namespace ReteaSocialaMDS.Controllers
         }
 
         [HttpPost]
-        public ViewResult testeRequestParams(TesteIndexMVVM data)
+        public ActionResult testeRequestParams(TesteIndexMVVM data)
         {
             if (!ModelState.IsValid)
             {
@@ -46,5 +46,7 @@ namespace ReteaSocialaMDS.Controllers
             }
             return View();
         }
+
+       
     }
 }

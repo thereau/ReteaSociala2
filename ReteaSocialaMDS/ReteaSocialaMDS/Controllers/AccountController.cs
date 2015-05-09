@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -29,6 +30,7 @@ namespace ReteaSocialaMDS.Controllers
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            
         }
 
         public ApplicationSignInManager SignInManager
@@ -154,6 +156,12 @@ namespace ReteaSocialaMDS.Controllers
         {
             if (ModelState.IsValid)
             {
+                string[] dates = model.BirthDate.Split('/');
+               
+                int year = int.Parse(dates[2]);
+                int month = int.Parse(dates[0]);
+                int day = int.Parse(dates[1]);
+
                 var user = new ApplicationUser
                 {
                     UserName = model.Email,
@@ -162,8 +170,8 @@ namespace ReteaSocialaMDS.Controllers
                     LastName = model.LastName,
                     AdressName = model.AdressName,
                     TwitterHandle = model.TwitterHandle,
-                    BirthDate = model.BirthDate,
-                    AccountCreation = model.BirthDate,
+                    BirthDate = new DateTime(year,month,day),
+                    AccountCreation = DateTime.Now,
 
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
@@ -466,6 +474,28 @@ namespace ReteaSocialaMDS.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        [Authorize]
+        public ActionResult UserDetails()
+        {
+            var userID = User.Identity.GetUserId();
+            var context = new ApplicationDbContext();
+            var userStore = new UserStore<ApplicationUser>(context);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+            var user = userManager.FindById(userID);
+            var model = new UserDetailsViewModel
+            {
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                AdressName = user.AdressName,
+                TwitterHandle = user.TwitterHandle,
+                BirthDate = user.BirthDate,
+                AccountCreation = user.AccountCreation
+            };
+            return View(model);
+        }
+
         internal class ChallengeResult : HttpUnauthorizedResult
         {
             public ChallengeResult(string provider, string redirectUri)
@@ -562,6 +592,7 @@ namespace ReteaSocialaMDS.Controllers
         public ActionResult AddRoleToUser()
         {
             var context = new ApplicationDbContext();
+          
 
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
@@ -569,7 +600,6 @@ namespace ReteaSocialaMDS.Controllers
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleManager = new RoleManager<IdentityRole>(roleStore);
 
-           
             List<String> rolesName = (from role in roleManager.Roles select role.Name).ToList();
             List<String> userNames= (from user in userManager.Users select user.Email).ToList();
 

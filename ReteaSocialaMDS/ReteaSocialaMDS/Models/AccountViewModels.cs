@@ -106,12 +106,11 @@ namespace ReteaSocialaMDS.Models
       
         [Display(Name = "Birth date")]
         [DataType(DataType.DateTime)]
-        public DateTime BirthDate { get; set; }
+        [CheckDate]
+        public string BirthDate { get; set; }
 
        
-        [Display(Name = "Accout creation date and time")]
-        [DataType(DataType.DateTime)]
-        public DateTime AccountCreation { get; set; }
+       
     }
 
     public class ResetPasswordViewModel
@@ -141,5 +140,46 @@ namespace ReteaSocialaMDS.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+    }
+
+    public class UserDetailsViewModel
+    {
+        
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+
+        [Display(Name = "First name")]
+        [DataType(DataType.Text)]
+        public string FirstName { get; set; }
+
+
+        
+        [Display(Name = "Last name")]
+        [DataType(DataType.Text)]
+        public string LastName { get; set; }
+
+
+        
+        [DataType(DataType.MultilineText)]
+        public string AdressName { get; set; }
+
+
+        
+        [Display(Name = "Twitter Handle")]
+        [DataType(DataType.Text)]
+        public string TwitterHandle { get; set; }
+
+
+        [Display(Name = "Birth date")]
+        [DataType(DataType.DateTime)]
+        public DateTime BirthDate { get; set; }
+
+        [Display(Name = "Account creation date and time")]
+        [DataType(DataType.DateTime)]
+        public DateTime AccountCreation{ get; set; }
+
+
     }
 }
