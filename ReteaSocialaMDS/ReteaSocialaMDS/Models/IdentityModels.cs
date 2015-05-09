@@ -39,6 +39,7 @@ namespace ReteaSocialaMDS.Models
         public DateTime AccountCreation { get; set; }
 
         public virtual ICollection<UserImage> UserImages { get; set; }
+        public virtual ICollection<Friend> Friends { get; set; }
 
 
        
@@ -61,7 +62,8 @@ namespace ReteaSocialaMDS.Models
         {
         }
 
-        public DbSet<UserImage> UserImage { get; set; } 
+        public DbSet<UserImage> UserImage { get; set; }
+        public DbSet<Friend> Friend { get; set; } 
 
         public static ApplicationDbContext Create()
         {

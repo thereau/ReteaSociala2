@@ -91,3 +91,11 @@ div.bhoechie-tab-content{
 div.bhoechie-tab div.bhoechie-tab-content:not(.active){
   display: none;
 }
+.wrapper { position: relative; }
+.wrapper .image { position: absolute; }
+.img-thumbnail {
+    padding: 10px;
+}
+.post-box {
+    margin: 15px 0 15px 0;
+}

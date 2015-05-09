@@ -2,15 +2,86 @@
 @{
     ViewBag.Title = "User Images List";
 }
-<div class="row">
-    <div class="col-md-6 col-md-offset-3">
-        @foreach (var item in Model)
-        {
-            <div class="col-md-4">
-                <img src="@Url.Content(item.ToString())" class="img-responsive" />
-            </div>
 
 
-        }
+<div class="container-fluid">
+    <div class="row">
+        <button type="button" class="btn btn-success" id="ajaxImages">Load more images</button>
     </div>
+   
+        <div class="masonry">
+            @foreach (var item in Model)
+            {
+                <div class="post-box col-sm-4 col-md-4 col-lg-4">
+                    <img class="img-responsive img-thumbnail" src="@item.ToString()"/>
+                </div>
+
+            }
+        </div>
+    
+
+
 </div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        
+        $("window").ready(function () {
+
+            /*$(".img-responsive").load(function () {
+                console.log($(this).height());
+                console.log($(this).width());
+            });*/
+            var numberOfImages = $(".img-thumbnail").length;
+            console.log(numberOfImages);
+
+            // the image content container 
+            var $container = $(".masonry");
+
+            $container.imagesLoaded(function() {
+                $container.masonry({
+                    itemSelector: '.post-box',
+                    columnWidth: '.post-box',
+                    transitionDuration: 500
+                });
+            });
+            $("#ajaxImages").click(function () {
+                console.log("aici");
+                    $.ajax({
+                        url: "/Home/UserImagesList",
+                        data: {
+                            "skip": numberOfImages
+                        },
+                        method:"POST",
+                        success: function (result) {
+                            console.log(result);
+                            console.log("in succes");
+                            numberOfImages += 5;
+                            var elements = [];
+                        $.each(result, function (key, value) {
+                            var elem = $("<div class=\"post-box col-sm-4 col-md-4 col-lg-4\">" + "<img class=\"img-responsive img-thumbnail\" src=\"" + value + "\"" + "/></div>");
+                           
+                            console.log(elem);
+
+                            elements.push(elem);
+
+
+                        });
+
+                        $container.append(elements);
+                            $container.imagesLoaded(function() {
+                                $container.masonry();
+                                $container.masonry('appended', (elements)); //as told above
+                            });
+
+                        }
+                });
+            });
+            
+        });
+        
+       
+
+    </script>
+}
