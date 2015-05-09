@@ -2,23 +2,56 @@
 @{
     ViewBag.Title = "User Images List";
 }
-
+<style>
+    .background-profil {
+    background-image:url(@Model.Skip(3).First());
+    height: 300px;
+    background-size: cover;
+    }
+    .imagine-profil {
+        position: absolute;
+        height: 150px;
+        width: 150px;
+        left: -75px;
+        top: 75px;
+        padding: 0px;
+        border-radius: 100px;
+    }
+    .profile-information {
+        margin-left: 10%;
+    }
+    
+</style>
 
 <div class="container">
+    <div class="row panel">
+        <div class="col-md-4 background-profil"></div>
+
+        
+        <div class="col-md-8">
+            <img src="@Model.First()" class="img-rounded imagine-profil"/>
+            <div class="profile-information">
+                <h1>Gigel Apostolesei</h1>
+                <h2>Bucharest</h2>
+                <p>Ceva ceva ceva ceva ceva ceva ceva ceva ceva</p>
+                <p>Atlceva Atlceva Atlceva Atlceva Atlceva Atlceva Atlceva Atlceva Atlceva Atlceva Atlceva Atlceva </p>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <button type="button" class="btn btn-success" id="ajaxImages">Load more images</button>
     </div>
-   
-        <div class="masonry">
-            @foreach (var item in Model)
-            {
-                <div class="post-box col-sm-4 col-md-4 col-lg-4">
-                    <img class="img-responsive img-thumbnail" src="@item.ToString()"/>
-                </div>
 
-            }
-        </div>
-    
+    <div class="masonry">
+        @foreach (var item in Model)
+        {
+            <div class="post-box col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <img class="img-responsive img-thumbnail" src="@item.ToString()"/>
+            </div>
+
+        }
+    </div>
+
 
 
 </div>
@@ -29,14 +62,10 @@
         
         $("window").ready(function () {
 
-            /*$(".img-responsive").load(function () {
-                console.log($(this).height());
-                console.log($(this).width());
-            });*/
+            
             var numberOfImages = $(".img-thumbnail").length;
             console.log(numberOfImages);
 
-            // the image content container 
             var $container = $(".masonry");
 
             $container.imagesLoaded(function() {
@@ -60,7 +89,7 @@
                             numberOfImages += 5;
                             var elements = [];
                         $.each(result, function (key, value) {
-                            var elem = $("<div class=\"post-box col-sm-4 col-md-4 col-lg-4\">" + "<img class=\"img-responsive img-thumbnail\" src=\"" + value + "\"" + "/></div>");
+                            var elem = $("<div class=\"post-box col-xs-12 col-sm-4 col-md-4 col-lg-4\">" + "<img class=\"img-responsive img-thumbnail\" src=\"" + value + "\"" + "/></div>");
                            
                             console.log(elem);
 

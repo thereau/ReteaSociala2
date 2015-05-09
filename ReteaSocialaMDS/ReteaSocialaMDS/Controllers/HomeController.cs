@@ -139,5 +139,15 @@ namespace ReteaSocialaMDS.Controllers
             return Json(imgs);
 
         }
+
+        public ActionResult UserProfile(string id)
+        {
+            var userStore = new UserStore<ApplicationUser>(db);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            ApplicationUser user = userManager.FindById(id);
+
+            return View();
+        }
     }
 }

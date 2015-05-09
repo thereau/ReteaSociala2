@@ -74,3 +74,6 @@ C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSociala
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.Migrations.RemoveUserFriends.resources
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.Migrations.NewUserFriends.resources
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.Migrations.NewUserFriendsTwo.resources
+C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.Migrations.FriendRequestsAdded.resources
+C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.Migrations.POSTandPOSTcomments.resources
+C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.Migrations.POSTandPOSTcommentsWITHstrings.resources

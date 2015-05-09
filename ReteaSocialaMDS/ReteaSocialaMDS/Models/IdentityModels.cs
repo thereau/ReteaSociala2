@@ -40,6 +40,10 @@ namespace ReteaSocialaMDS.Models
 
         public virtual ICollection<UserImage> UserImages { get; set; }
         public virtual ICollection<Friend> Friends { get; set; }
+        public virtual ICollection<FriendRequest> FriendRequests { get; set; }
+
+        public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<PostComment> PostComments { get; set; } 
 
 
        
@@ -63,7 +67,10 @@ namespace ReteaSocialaMDS.Models
         }
 
         public DbSet<UserImage> UserImage { get; set; }
-        public DbSet<Friend> Friend { get; set; } 
+        public DbSet<Friend> Friend { get; set; }
+        public DbSet<FriendRequest> FriendRequest { get; set; }
+        public DbSet<Post> Post { get; set; }
+        public DbSet<PostComment> PostComment { get; set; } 
 
         public static ApplicationDbContext Create()
         {
