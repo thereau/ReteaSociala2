@@ -262,6 +262,7 @@
     <Compile Include="Models\Friend.cs" />
     <Compile Include="Models\FriendRequest.cs" />
     <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\HomeViewModels\FriendRequestViewModel.cs" />
     <Compile Include="Models\HomeViewModels\UserProfileViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ImageDetailsViewModel.cs" />

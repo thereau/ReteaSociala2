@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
+using System.Web.DynamicData;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -153,17 +154,18 @@ namespace ReteaSocialaMDS.Controllers
             var userManager = new UserManager<ApplicationUser>(userStore);
 
             ApplicationUser user = userManager.FindById(id);
-            var friends = user.Friends.FirstOrDefault(friend => friend.OtherUserId.ToString() == User.Identity.GetUserId().ToString());
-            var friendRequest =
-                user.FriendRequests.FirstOrDefault(friend => friend.FutureFriendUserId.ToString() == User.Identity.GetUserId().ToString());
+            string userId = User.Identity.GetUserId();
+            List<string> friends = (from fr in db.Friend where (fr.UserId.CompareTo(id)==0 && fr.OtherUserId.CompareTo(userId)==0) select fr.UserId).ToList();
+            
+            List<String> friendRequest = (from fr in db.FriendRequest where (fr.UserId.CompareTo(id)==0 && fr.FutureFriendUserId.CompareTo(userId)==0) select fr.UserId).ToList();
             UserProfileViewModel model = new UserProfileViewModel()
             {
                 firstName = user.FirstName,
                 lastName = user.LastName,
                 numberOfFriends = user.Friends.Count,
                 numberOfImages = user.UserImages.Count,
-                friend = friends != null,
-                friendReq = friendRequest != null,
+                friend = friends.Count !=0,
+                friendReq = friendRequest.Count != 0,
                 User = id
             };
 
@@ -179,7 +181,7 @@ namespace ReteaSocialaMDS.Controllers
             ApplicationUser friend = userManager.FindById(otherUserId);
             if (friend == null || otherUserId ==User.Identity.GetUserId())
             {
-                return Json("the user don't exist");
+                return Json("-1");
             }
             FriendRequest newFriendRequest = new FriendRequest()
             {
@@ -189,8 +191,31 @@ namespace ReteaSocialaMDS.Controllers
             db.FriendRequest.Add(newFriendRequest);
             db.SaveChanges();
 
-            return Json("friend request pending");
+            return Json("0");
         }
+
+        [Authorize]
+        public JsonResult FriendRequests()
+        {
+            var userStore = new UserStore<ApplicationUser>(db);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            
+            string userId = User.Identity.GetUserId();
+            List<string> friendReq = (from fr in db.FriendRequest where (fr.UserId.CompareTo(userId) ==0 ) select fr.FutureFriendUserId).ToList();
+            List<FriendRequestViewModel> futureFriends = new List<FriendRequestViewModel>();
+            foreach (string futureFriendUserId in friendReq)
+            {
+                futureFriends.Add(new FriendRequestViewModel()
+                {
+                  FutureFriendId  = futureFriendUserId,
+                  FullName =  userManager.FindById(futureFriendUserId).FirstName
+                });
+            }
+            
+            return Json(futureFriends);
+        }
+        
 
     }
 }
