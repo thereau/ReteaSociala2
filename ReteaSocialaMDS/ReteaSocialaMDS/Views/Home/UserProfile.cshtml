@@ -1,0 +1,123 @@
+﻿@model ReteaSocialaMDS.Models.HomeViewModels.UserProfileViewModel
+@{
+    ViewBag.Title = "UserProfile";
+}
+
+
+
+<style>
+    .background-profil-alt-user {
+        background-image: url(@Url.Content("~/images/users/7bb8ca6f-e4fa-466b-aaa8-56033941b49a11039583_1566644826926796_731407738_n.jpg"));
+    height: 300px;
+    background-size: cover;
+    }
+    .panel {
+        margin-bottom: 0px;
+    }
+</style>
+<div class="row" style="padding-top: 30px;">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="row panel" id="panel-fara-padding">
+            <div class="col-md-11">
+                <div class="row panel">
+                    <div class="col-md-4" style="padding-right: 0px; padding-left: 0px;">
+                        <div class="col-md-12" style="background-color: #FA3F73; color: white; height: 250px;">
+                            <div style="padding: 25px 25px;">
+                                <p>
+                                    <i class="fa fa-thumbs-o-up"></i>Ai accesat profilul lui
+                                </p>
+                                <p><i class="fa fa-user"></i>@Model.firstName</p>
+                                <p><i class="fa fa-user"></i>@Model.lastName</p>
+                                <p>Prieteni: @Model.friend</p>
+                                <p>Cere prietenie trimisa: @Model.friendReq</p>
+                                @if (@Model.friend)
+                                {
+                                    <button type="button" id="alreadyFriends" class="btn btn-success">
+                                        <i class="fa fa-check-circle"></i>Already friends
+                                    </button>
+                                }
+                                else
+                                {
+
+                                    if (@Model.friendReq)
+                                    {
+                                        <button type="button" id="requestPending" class="btn btn-primary">
+                                            <i class="fa fa-question-circle"></i>Request pending
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" id="addFriend" class="btn btn-primary">
+                                            <i class="fa fa-plus-circle"></i>Add Friend
+                                        </button>
+                                    }
+                                }
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="background-color: #EFEFEF; color: grey; height: 50px;">
+                            <p>Prieteni:</p>
+                            <p>@Model.numberOfFriends</p>
+                        </div>
+                        <div class="col-md-6" style="background-color: #EFEFEF; color: grey; height: 50px;">
+                            <p>Imagini:</p>
+                            <p>@Model.numberOfImages</p>
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-8 background-profil-alt-user">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1" style="background-color: #4CD9D3; height: 300px; font-size: 45px; color: white;">
+                <div class="col-md-12" style="height: 33.3333%">
+                    <i class="fa fa-envelope-o"></i>
+                </div>
+                <div class="col-md-12" style="height: 33.3333%">
+                    <i class="fa fa-film"></i>
+                </div>
+                <div class="col-md-12" style="height: 33.3333%">
+                    <i class="fa fa-list-alt"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+@section Scripts
+{
+    <script type="text/javascript">
+        $("window").ready(function() {
+            var userId = "@Model.User";
+            $("#addFriend").click(function() {
+                $.ajax({
+                    url: "/Home/FriendRequestSend",
+                    method: "POST",
+                    data: {
+                        "otherUserId": String(userId)
+                    },
+                    success: function(result) {
+                        $.each(result, function(key, value) {
+                            console.log(key);
+                            console.log(value);
+                            if (value === "the user don't exist") {
+
+                            } else if (value==="friend request pending") {
+                                $("#addFriend").html = "<i class=\"fa fa-question-circle\"></i>Request pending";
+                            }
+                        });
+                    }
+
+                });
+            });
+
+        });
+
+    </script>
+}

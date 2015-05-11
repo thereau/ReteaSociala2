@@ -262,6 +262,7 @@
     <Compile Include="Models\Friend.cs" />
     <Compile Include="Models\FriendRequest.cs" />
     <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\HomeViewModels\UserProfileViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ImageDetailsViewModel.cs" />
     <Compile Include="Models\ImageViewModel.cs" />
@@ -509,6 +510,7 @@
     <Content Include="Views\ImageModels\Index.cshtml" />
     <Content Include="Views\Home\CreateUserImage.cshtml" />
     <Content Include="Views\Home\UserImagesList.cshtml" />
+    <Content Include="Views\Home\UserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

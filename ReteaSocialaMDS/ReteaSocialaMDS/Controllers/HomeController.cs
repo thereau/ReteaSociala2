@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ReteaSocialaMDS.Models;
+using ReteaSocialaMDS.Models.HomeViewModels;
 
 namespace ReteaSocialaMDS.Controllers
 {
@@ -140,14 +143,54 @@ namespace ReteaSocialaMDS.Controllers
 
         }
 
+        [Authorize]
+        [HttpGet]
         public ActionResult UserProfile(string id)
         {
+            if (id == null)
+                id = User.Identity.GetUserId();
             var userStore = new UserStore<ApplicationUser>(db);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
             ApplicationUser user = userManager.FindById(id);
+            var friends = user.Friends.FirstOrDefault(friend => friend.OtherUserId.ToString() == User.Identity.GetUserId().ToString());
+            var friendRequest =
+                user.FriendRequests.FirstOrDefault(friend => friend.FutureFriendUserId.ToString() == User.Identity.GetUserId().ToString());
+            UserProfileViewModel model = new UserProfileViewModel()
+            {
+                firstName = user.FirstName,
+                lastName = user.LastName,
+                numberOfFriends = user.Friends.Count,
+                numberOfImages = user.UserImages.Count,
+                friend = friends != null,
+                friendReq = friendRequest != null,
+                User = id
+            };
 
-            return View();
+            return View(model);
         }
+
+        [Authorize]
+        [HttpPost]
+        public JsonResult FriendRequestSend(string otherUserId)
+        {
+            var userStore = new UserStore<ApplicationUser>(db);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+            ApplicationUser friend = userManager.FindById(otherUserId);
+            if (friend == null || otherUserId ==User.Identity.GetUserId())
+            {
+                return Json("the user don't exist");
+            }
+            FriendRequest newFriendRequest = new FriendRequest()
+            {
+                UserId = otherUserId,
+                FutureFriendUserId = User.Identity.GetUserId()
+            };
+            db.FriendRequest.Add(newFriendRequest);
+            db.SaveChanges();
+
+            return Json("friend request pending");
+        }
+
     }
 }

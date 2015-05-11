@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/fontAwesome")
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("PageScripts", required: false)
 
@@ -47,25 +48,25 @@
 <div class="container-fluid body-content">
     
     @RenderBody()
-    <nav>
-        @if (IsSectionDefined("Nav"))
-        {
-            @RenderSection("Nav", required: false)
-        }
-        else
-        {
-            <ul>
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("About", "About", "Home")</li>
-                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-            </ul>
-        }
 
-    </nav>
-    <hr/>
-    <footer>
-        <p>&copy; @DateTime.Now.Year -Retea Sociala MDS</p>
-    </footer>
+    <div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+        <nav>
+            @if (IsSectionDefined("Nav"))
+            {
+                @RenderSection("Nav", required: false)
+            }
+            else
+            {
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+            }
+
+        </nav>
+    </div>
+    
 </div>
 
 @Scripts.Render("~/bundles/jquery")

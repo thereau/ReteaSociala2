@@ -90,16 +90,17 @@
                             var elements = [];
                         $.each(result, function (key, value) {
                             var elem = $("<div class=\"post-box col-xs-12 col-sm-4 col-md-4 col-lg-4\">" + "<img class=\"img-responsive img-thumbnail\" src=\"" + value + "\"" + "/></div>");
-                           
+                            
                             console.log(elem);
 
                             elements.push(elem);
 
 
                         });
-
+                            
                         $container.append(elements);
-                            $container.imagesLoaded(function() {
+                        $container.imagesLoaded(function () {
+                           
                                 $container.masonry('reloadItems');
                                 $container.masonry('layout');
                              

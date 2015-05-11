@@ -63,7 +63,6 @@ C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSociala
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.Migrations.Initial.resources
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.Migrations.adaugacoloane.resources
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.Migrations.FaraSchimbariPentruSeed.resources
-C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.csprojResolveAssemblyReference.cache
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\bin\Mvc.RazorTools.dll
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\bin\Mvc.RazorTools.FontAwesome.dll
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\bin\WebActivatorEx.dll
@@ -77,3 +76,4 @@ C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSociala
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.Migrations.FriendRequestsAdded.resources
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.Migrations.POSTandPOSTcomments.resources
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.Migrations.POSTandPOSTcommentsWITHstrings.resources
+C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.csprojResolveAssemblyReference.cache
