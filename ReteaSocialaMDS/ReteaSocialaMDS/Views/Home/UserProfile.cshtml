@@ -95,26 +95,31 @@
     <script type="text/javascript">
         $("window").ready(function() {
             var userId = "@Model.User";
-            $("#addFriend").click(function() {
-                $.ajax({
-                    url: "/Home/FriendRequestSend",
-                    method: "POST",
-                    dataType: 'json',
-                    data: {
-                        "otherUserId": String(userId)
-                    },
-                    success: function (result) {
-                        console.log(result);
-                        result = JSON.parse(result)
-                        if (result == 0) {
-                            console.log("incerc as modific");
-                            //$("#addFriend").innerText = "<i class=\"fa fa-question-circle\"></i>Request pending";
-                            var buttonFriend = $('#addFriend');
-                            $('#addFriend').text('Request pending').prepend(buttonFriend);
-                            }
-                    }
+            var alreadySent = false;
 
-                });
+            $("#addFriend").click(function () {
+                if(alreadySent == false){
+                    $.ajax({
+                        url: "/Home/FriendRequestSend",
+                        method: "POST",
+                        dataType: 'json',
+                        data: {
+                            "otherUserId": String(userId)
+                        },
+                        success: function (result) {
+                            alreadySent = true;
+                            console.log(result);
+                            result = JSON.parse(result)
+                            if (result == 0) {
+                                console.log("incerc as modific");
+                                //$("#addFriend").innerText = "<i class=\"fa fa-question-circle\"></i>Request pending";
+                                var buttonFriend = $('#addFriend');
+                                $('#addFriend').text('Request pending').prepend(buttonFriend);
+                            }
+                        }
+
+                    });
+                }
             });
 
         });
