@@ -1,3 +1,4 @@
 # ReteaSociala2
-
-trafalet
+- posturi
+- zoom photo click
+- more to come
