@@ -215,7 +215,51 @@ namespace ReteaSocialaMDS.Controllers
             
             return Json(futureFriends);
         }
-        
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult AddPost()
+        {
+            return View(new Post());
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult AddPost(Post newPost)
+        {
+
+            newPost.Id = int.Parse(User.Identity.GetUserId());
+            newPost.PostDate = System.DateTime.Now;
+
+            db.Post.Add(newPost);
+
+            //string userId = User.Identity.GetUserId();
+            //DateTime now = System.DateTime.Now;
+
+            //db.Post.Add(new Post()
+            //{
+            //    UserId = userId,
+            //    PostDate = now,
+            //    PostMessage = postComment
+
+            //});
+            db.SaveChanges();
+
+            //List<string> postAuthors  = (from post in db.Post where (post.UserId.CompareTo(userId) == 0) select post.UserId).ToList();
+            //List<DateTime> postDates = (from post in db.Post where (post.UserId.CompareTo(userId) == 0) select post.PostDate).ToList();
+            //List<string> postContent = (from post in db.Post where (post.UserId.CompareTo(userId) == 0) select post.PostMessage).ToList();
+
+            return Redirect("/");
+
+        }
+        [Authorize]
+        public ActionResult Posts()
+        {
+
+            IEnumerable<Post> allPosts = db.Post.ToList();
+
+            return View(allPosts);
+        }
 
     }
 }
