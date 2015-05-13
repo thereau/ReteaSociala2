@@ -50,7 +50,9 @@ namespace ReteaSocialaMDS.Models
         public virtual ICollection<Friend> IsFriend { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }
-        public virtual ICollection<PostComment> PostComments { get; set; } 
+        public virtual ICollection<PostComment> PostComments { get; set; }
+        public virtual ICollection<Conversation> StartedBy { get; set; }
+        public virtual ICollection<Conversation> NotStartedBy { get; set; }
 
 
        
@@ -77,7 +79,9 @@ namespace ReteaSocialaMDS.Models
         public DbSet<Friend> Friend { get; set; }
         public DbSet<FriendRequest> FriendRequest { get; set; }
         public DbSet<Post> Post { get; set; }
-        public DbSet<PostComment> PostComment { get; set; } 
+        public DbSet<PostComment> PostComment { get; set; }
+        public DbSet<Conversation> Conversations { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         public static ApplicationDbContext Create()
         {
@@ -90,6 +94,9 @@ namespace ReteaSocialaMDS.Models
             modelBuilder.Entity<FriendRequest>().HasRequired(m => m.FutureFriendrUser).WithMany(m => m.ReceivedFriendRequests);
             modelBuilder.Entity<Friend>().HasRequired(m => m.User).WithMany(m => m.FriendWith);
             modelBuilder.Entity<Friend>().HasRequired(m => m.OtherUser).WithMany(m => m.IsFriend);
+
+            modelBuilder.Entity<Conversation>().HasRequired(m => m.FirstUser).WithMany(m => m.StartedBy);
+            modelBuilder.Entity<Conversation>().HasRequired(m => m.SecondUser).WithMany(m => m.NotStartedBy);
         }
     }
 

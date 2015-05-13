@@ -259,10 +259,15 @@
     <Compile Include="Migrations\201505121904184_AmRezolvatRelatiileFriendSiFriendReq.Designer.cs">
       <DependentUpon>201505121904184_AmRezolvatRelatiileFriendSiFriendReq.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505131936281_MessageAndConversation.cs" />
+    <Compile Include="Migrations\201505131936281_MessageAndConversation.Designer.cs">
+      <DependentUpon>201505131936281_MessageAndConversation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CheckDate.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\Friend.cs" />
     <Compile Include="Models\FriendRequest.cs" />
     <Compile Include="Models\Group.cs" />
@@ -272,6 +277,7 @@
     <Compile Include="Models\ImageDetailsViewModel.cs" />
     <Compile Include="Models\ImageViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\PostComment.cs" />
     <Compile Include="Models\PostViewModel.cs" />
@@ -565,6 +571,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505121904184_AmRezolvatRelatiileFriendSiFriendReq.resx">
       <DependentUpon>201505121904184_AmRezolvatRelatiileFriendSiFriendReq.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505131936281_MessageAndConversation.resx">
+      <DependentUpon>201505131936281_MessageAndConversation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
