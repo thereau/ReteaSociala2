@@ -76,20 +76,13 @@
             </div>
             <div class="col-md-1" style="background-color: #4CD9D3; height: 300px; font-size: 45px; color: white;">
                 <div class="col-md-12" style="height: 33.3333%">
-                    <a href="#">
-                        <i class="fa fa-envelope-o"></i>
-                    </a>
-                    
+                    <i class="fa fa-envelope-o"></i>
                 </div>
                 <div class="col-md-12" style="height: 33.3333%">
-                    <a href="#">
-                        <i class="fa fa-film"></i>
-                    </a>
+                    <i class="fa fa-film"></i>
                 </div>
                 <div class="col-md-12" style="height: 33.3333%">
-                    <a href="#">
-                        <i class="fa fa-list-alt"></i>
-                    </a>
+                    <i class="fa fa-list-alt"></i>
                 </div>
             </div>
         </div>
@@ -100,30 +93,34 @@
 @section Scripts
 {
     <script type="text/javascript">
-        $("window").ready(function () {
+        $("window").ready(function() {
             var userId = "@Model.User";
+            var alreadySent = false;
+
             $("#addFriend").click(function () {
-                $.ajax({
-                    url: "/Home/FriendRequestSend",
-                    method: "POST",
-                    dataType: 'json',
-                    data: {
-                        "otherUserId": String(userId)
-                    },
-                    success: function (result) {
-                        console.log(result);
-                        result = JSON.parse(result)
-                        if (result == 0) {
-                            console.log("incerc as modific");
-                            //$("#addFriend").innerText = "<i class=\"fa fa-question-circle\"></i>Request pending";
-                            var buttonFriend = $('#addFriend');
-                            $('#addFriend').text('Request pending').prepend(buttonFriend);
+                if(alreadySent == false){
+                    $.ajax({
+                        url: "/Home/FriendRequestSend",
+                        method: "POST",
+                        dataType: 'json',
+                        data: {
+                            "otherUserId": String(userId)
+                        },
+                        success: function (result) {
+                            alreadySent = true;
+                            console.log(result);
+                            result = JSON.parse(result)
+                            if (result == 0) {
+                                console.log("incerc as modific");
+                                //$("#addFriend").innerText = "<i class=\"fa fa-question-circle\"></i>Request pending";
+                                var buttonFriend = $('#addFriend');
+                                $('#addFriend').text('Request pending').prepend(buttonFriend);
+                            }
                         }
-                    }
 
-                });
+                    });
+                }
             });
-
 
         });
 
