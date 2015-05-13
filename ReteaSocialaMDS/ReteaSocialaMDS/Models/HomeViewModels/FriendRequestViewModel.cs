@@ -8,6 +8,7 @@ namespace ReteaSocialaMDS.Models.HomeViewModels
     public class FriendRequestViewModel
     {
         public string FutureFriendId { get; set; }
-        public string FullName { get; set; }
+        public string FirstName { get; set; }
+        public string SecondName { get; set; }
     }
 }

@@ -255,6 +255,10 @@
     <Compile Include="Migrations\201505091509408_POSTandPOSTcommentsWITHstrings.Designer.cs">
       <DependentUpon>201505091509408_POSTandPOSTcommentsWITHstrings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505121904184_AmRezolvatRelatiileFriendSiFriendReq.cs" />
+    <Compile Include="Migrations\201505121904184_AmRezolvatRelatiileFriendSiFriendReq.Designer.cs">
+      <DependentUpon>201505121904184_AmRezolvatRelatiileFriendSiFriendReq.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CheckDate.cs" />
@@ -558,6 +562,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505091509408_POSTandPOSTcommentsWITHstrings.resx">
       <DependentUpon>201505091509408_POSTandPOSTcommentsWITHstrings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505121904184_AmRezolvatRelatiileFriendSiFriendReq.resx">
+      <DependentUpon>201505121904184_AmRezolvatRelatiileFriendSiFriendReq.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

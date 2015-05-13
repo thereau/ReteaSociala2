@@ -1,4 +1,4 @@
-﻿using System.Web.Optimization;
+﻿/*using System.Web.Optimization;
 
 [assembly: WebActivatorEx.PostApplicationStartMethod(typeof(Mvc.RazorTools.FontAwesome.App_Start), "Initialize")]
 
@@ -29,4 +29,4 @@ namespace Mvc.RazorTools.FontAwesome
 			Mvc.RazorTools.BundleManager.Styles.Include("~/Content/font-awesome.css");
 		}
 	}
-}
+}*/

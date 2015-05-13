@@ -46,3 +46,8 @@ C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSociala
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS.Tests\obj\Debug\ReteaSocialaMDS.Tests.csprojResolveAssemblyReference.cache
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS.Tests\obj\Debug\ReteaSocialaMDS.Tests.dll
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS.Tests\obj\Debug\ReteaSocialaMDS.Tests.pdb
+C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS.Tests\bin\Debug\Mvc.RazorTools.dll
+C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS.Tests\bin\Debug\Mvc.RazorTools.FontAwesome.dll
+C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS.Tests\bin\Debug\WebActivatorEx.dll
+C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS.Tests\bin\Debug\Mvc.RazorTools.xml
+C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS.Tests\bin\Debug\Mvc.RazorTools.FontAwesome.xml

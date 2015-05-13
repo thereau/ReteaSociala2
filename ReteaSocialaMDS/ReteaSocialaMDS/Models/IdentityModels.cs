@@ -39,8 +39,15 @@ namespace ReteaSocialaMDS.Models
         public DateTime AccountCreation { get; set; }
 
         public virtual ICollection<UserImage> UserImages { get; set; }
-        public virtual ICollection<Friend> Friends { get; set; }
-        public virtual ICollection<FriendRequest> FriendRequests { get; set; }
+        
+        public virtual ICollection<FriendRequest> ReceivedFriendRequests { get; set; }
+        public virtual ICollection<FriendRequest> SentFriendRequests { get; set; }
+
+        //FriendWith cand UserId este ID-ul userului
+        public virtual ICollection<Friend> FriendWith { get; set; }
+
+        //IsFriend cand OtherUserId este ID-ul userului
+        public virtual ICollection<Friend> IsFriend { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<PostComment> PostComments { get; set; } 
@@ -76,5 +83,14 @@ namespace ReteaSocialaMDS.Models
         {
             return new ApplicationDbContext();
         }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<FriendRequest>().HasRequired(m => m.User).WithMany(m => m.SentFriendRequests);
+            modelBuilder.Entity<FriendRequest>().HasRequired(m => m.FutureFriendrUser).WithMany(m => m.ReceivedFriendRequests);
+            modelBuilder.Entity<Friend>().HasRequired(m => m.User).WithMany(m => m.FriendWith);
+            modelBuilder.Entity<Friend>().HasRequired(m => m.OtherUser).WithMany(m => m.IsFriend);
+        }
     }
+
 }

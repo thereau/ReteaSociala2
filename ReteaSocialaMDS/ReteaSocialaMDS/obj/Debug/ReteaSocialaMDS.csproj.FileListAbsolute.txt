@@ -76,4 +76,5 @@ C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSociala
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.Migrations.FriendRequestsAdded.resources
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.Migrations.POSTandPOSTcomments.resources
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.Migrations.POSTandPOSTcommentsWITHstrings.resources
+C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.Migrations.AmRezolvatRelatiileFriendSiFriendReq.resources
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.csprojResolveAssemblyReference.cache

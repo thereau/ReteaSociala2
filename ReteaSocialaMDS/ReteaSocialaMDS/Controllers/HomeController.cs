@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.DynamicData;
@@ -144,31 +145,81 @@ namespace ReteaSocialaMDS.Controllers
 
         }
 
+        /// <summary>
+        /// Returneaza profilul userului daca acesta exista sau pagina utilizatorului daca userul cu acel id nu exista sau id este null
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Profilul unui user</returns>
         [Authorize]
         [HttpGet]
         public ActionResult UserProfile(string id)
         {
-            if (id == null)
-                id = User.Identity.GetUserId();
+          
             var userStore = new UserStore<ApplicationUser>(db);
             var userManager = new UserManager<ApplicationUser>(userStore);
-
-            ApplicationUser user = userManager.FindById(id);
-            string userId = User.Identity.GetUserId();
-            List<string> friends = (from fr in db.Friend where (fr.UserId.CompareTo(id)==0 && fr.OtherUserId.CompareTo(userId)==0) select fr.UserId).ToList();
-            
-            List<String> friendRequest = (from fr in db.FriendRequest where (fr.UserId.CompareTo(id)==0 && fr.FutureFriendUserId.CompareTo(userId)==0) select fr.UserId).ToList();
-            UserProfileViewModel model = new UserProfileViewModel()
+            ApplicationUser user;
+            UserProfileViewModel model;
+            if (id == null)
             {
-                firstName = user.FirstName,
-                lastName = user.LastName,
-                numberOfFriends = user.Friends.Count,
-                numberOfImages = user.UserImages.Count,
-                friend = friends.Count !=0,
-                friendReq = friendRequest.Count != 0,
-                User = id
-            };
+                //in cazurile astea o sa redirectam pagina catre cea de profil a utilizatorului
+                //unde are si setarile
+                
+                user = userManager.FindById(User.Identity.GetUserId());
+                model = new UserProfileViewModel()
+                {
+                    firstName = user.FirstName,
+                    lastName = user.LastName,
+                    numberOfFriends = user.FriendWith.Count,
+                    numberOfImages = user.UserImages.Count,
+                    friend = false,
+                    friendReq = false,
+                    User = id
+                };
+            }
+            else
+            {
+                user = userManager.FindById(id);
+                if (user == null)
+                {
+                    user = userManager.FindById(User.Identity.GetUserId());
+                    
+                    model = new UserProfileViewModel()
+                    {
+                        firstName = user.FirstName,
+                        lastName = user.LastName,
+                        numberOfFriends = user.FriendWith.Count,
+                        numberOfImages = user.UserImages.Count,
+                        friend = false,
+                        friendReq = false,
+                        User = id
+                    };
+                }
+                else
+                {
+                    
+                    string currentUserId=User.Identity.GetUserId().ToString();
 
+                    Friend alreadyFriends = user.IsFriend.FirstOrDefault(fr=> fr.OtherUserId == currentUserId);
+                   
+                    //trebuia sa fie invers dar nu mai conteaza
+                    FriendRequest friendReqAlreadySent = user.SentFriendRequests.FirstOrDefault(fr => fr.FutureFriendUserId == currentUserId);
+
+                    model = new UserProfileViewModel()
+                    {
+                        firstName = user.FirstName,
+                        lastName = user.LastName,
+                        numberOfFriends = user.FriendWith.Count,
+                        numberOfImages = user.UserImages.Count,
+                        friend = alreadyFriends!=null,
+                        friendReq = friendReqAlreadySent!=null,
+                        User = id
+                    };
+
+                }
+                    
+            }
+
+             
             return View(model);
         }
 
@@ -183,37 +234,148 @@ namespace ReteaSocialaMDS.Controllers
             {
                 return Json("-1");
             }
-            FriendRequest newFriendRequest = new FriendRequest()
+
+            string currentUserId = User.Identity.GetUserId();
+
+            Friend alreadyFriends = friend.IsFriend.FirstOrDefault(fr => fr.OtherUserId == currentUserId);
+            FriendRequest friendReqAlreadySent =
+                friend.ReceivedFriendRequests.FirstOrDefault(fr => fr.FutureFriendUserId == currentUserId);
+
+            if (alreadyFriends == null && friendReqAlreadySent==null)
             {
-                UserId = otherUserId,
-                FutureFriendUserId = User.Identity.GetUserId()
-            };
-            db.FriendRequest.Add(newFriendRequest);
-            db.SaveChanges();
+                FriendRequest newFriendRequest = new FriendRequest()
+                {
+                    UserId = otherUserId,
+                    FutureFriendUserId = User.Identity.GetUserId()
+                };
+
+                db.FriendRequest.Add(newFriendRequest);
+                db.SaveChanges();
+            }
+
+            
 
             return Json("0");
         }
 
         [Authorize]
+        [HttpPost]
         public JsonResult FriendRequests()
         {
             var userStore = new UserStore<ApplicationUser>(db);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
+
+
             
             string userId = User.Identity.GetUserId();
-            List<string> friendReq = (from fr in db.FriendRequest where (fr.UserId.CompareTo(userId) ==0 ) select fr.FutureFriendUserId).ToList();
+            ApplicationUser currentUser = userManager.FindById(userId);
+            IEnumerable<Post> allPosts=currentUser.Posts.ToList();
+            List<string> friendReq = (from fr in currentUser.SentFriendRequests select fr.FutureFriendUserId).ToList();
+             
+                //(from fr in db.FriendRequest where (fr.UserId.CompareTo(userId) ==0 ) select fr.FutureFriendUserId).ToList();
             List<FriendRequestViewModel> futureFriends = new List<FriendRequestViewModel>();
             foreach (string futureFriendUserId in friendReq)
             {
                 futureFriends.Add(new FriendRequestViewModel()
                 {
                   FutureFriendId  = futureFriendUserId,
-                  FullName =  userManager.FindById(futureFriendUserId).FirstName
+                  FirstName =  userManager.FindById(futureFriendUserId).FirstName,
+                  SecondName = userManager.FindById(futureFriendUserId).LastName
                 });
             }
-            
+           
             return Json(futureFriends);
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="friendId"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost]
+        public JsonResult RemoveFriendRequest(string friendId)
+        {
+            if (friendId == null)
+                return Json(null);
+            else
+            {
+                var userStore = new UserStore<ApplicationUser>(db);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+
+
+                string userId = User.Identity.GetUserId();
+                ApplicationUser currentUser = userManager.FindById(userId);
+                ApplicationUser friendUser = userManager.FindById(friendId);
+
+                if (currentUser == null || friendUser == null)
+                    return Json(null);
+
+                FriendRequest friendRequest =
+                    (from fr in currentUser.ReceivedFriendRequests where (fr.UserId == friendId && fr.FutureFriendUserId == userId) select fr).FirstOrDefault();
+
+                if (friendRequest == null)
+                    return Json(null);
+                db.FriendRequest.Remove(friendRequest);
+                db.SaveChanges();
+
+
+
+
+            }
+            return Json(1);
+        }
+        /// <summary>
+        ///             
+        /// </summary>
+        /// <param name="friendId"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost]
+        public JsonResult AcceptFriendRequest(string friendId)
+        {
+            if (friendId == null)
+                return Json(null);
+            else
+            {
+                var userStore = new UserStore<ApplicationUser>(db);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+
+
+                string userId = User.Identity.GetUserId();
+                ApplicationUser currentUser = userManager.FindById(userId);
+                ApplicationUser friendUser = userManager.FindById(friendId);
+
+                if (currentUser == null || friendUser == null)
+                    return Json(null);
+
+                FriendRequest friendRequest =
+                    (from fr in currentUser.ReceivedFriendRequests where (fr.UserId == friendId && fr.FutureFriendUserId == userId) select fr).FirstOrDefault();
+
+                if (friendRequest == null)
+                    return Json(null);
+                db.FriendRequest.Remove(friendRequest);
+                db.SaveChanges();
+
+                Friend one, two;
+                one = new Friend()
+                {
+                    UserId = userId,
+                    OtherUserId = friendId
+                };
+                two = new Friend()
+                {
+                    UserId = friendId,
+                    OtherUserId = userId
+                };
+                db.Friend.Add(one);
+                db.Friend.Add(two);
+                db.SaveChanges();
+
+
+            }
+            return Json(1);
         }
         
 
