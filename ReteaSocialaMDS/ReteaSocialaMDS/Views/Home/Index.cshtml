@@ -91,7 +91,7 @@
 
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="post">
-                    @Html.Partial("_NewPost")
+                    @Html.Partial("AddPost")
                 </div>
                 <div role="tabpanel" class="tab-pane" id="photo">
                     Gigel poate e pe camp
@@ -103,6 +103,14 @@
             </div>
 
         </div>
+        @*@Html.Partial("Post", Model, new ViewDataDictionary(ViewData)
+        {
+            TemplateInfo = new System.Web.Mvc.TemplateInfo
+            {
+                HtmlFieldPrefix = "Post"
+            }
+        })*@
+        @Html.Action("Post", "Home")
 
     </div>
 

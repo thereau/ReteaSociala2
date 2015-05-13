@@ -522,6 +522,9 @@
     <Content Include="Views\Home\CreateUserImage.cshtml" />
     <Content Include="Views\Home\UserImagesList.cshtml" />
     <Content Include="Views\Home\UserProfile.cshtml" />
+    <Content Include="Views\Home\AddPost.cshtml" />
+    <Content Include="Views\Home\Post.cshtml" />
+    <Content Include="Views\Home\Posts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

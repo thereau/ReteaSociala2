@@ -377,6 +377,58 @@ namespace ReteaSocialaMDS.Controllers
             }
             return Json(1);
         }
+        [Authorize]
+        [HttpGet]
+        public ActionResult AddPost()
+        {
+            return View(new Post());
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult AddPost(Post newPost)
+        {
+
+            newPost.UserId = User.Identity.GetUserId();
+            newPost.PostDate = System.DateTime.Now;
+
+            db.Post.Add(newPost);
+
+            //string userId = User.Identity.GetUserId();
+            //DateTime now = System.DateTime.Now;
+
+            //db.Post.Add(new Post()
+            //{
+            //    UserId = userId,
+            //    PostDate = now,
+            //    PostMessage = postComment
+
+            //});
+            db.SaveChanges();
+
+            //List<string> postAuthors  = (from post in db.Post where (post.UserId.CompareTo(userId) == 0) select post.UserId).ToList();
+            //List<DateTime> postDates = (from post in db.Post where (post.UserId.CompareTo(userId) == 0) select post.PostDate).ToList();
+            //List<string> postContent = (from post in db.Post where (post.UserId.CompareTo(userId) == 0) select post.PostMessage).ToList();
+
+            return Redirect("/");
+
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult Post()
+        {
+
+            var userStore = new UserStore<ApplicationUser>(db);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            string userId = User.Identity.GetUserId();
+            ApplicationUser currentUser = userManager.FindById(userId);
+            IEnumerable<Post> allPosts = currentUser.Posts.ToList();
+
+            return View(allPosts);
+        }
+
         
 
     }
