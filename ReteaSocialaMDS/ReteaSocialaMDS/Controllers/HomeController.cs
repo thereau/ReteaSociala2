@@ -422,9 +422,32 @@ namespace ReteaSocialaMDS.Controllers
             var userStore = new UserStore<ApplicationUser>(db);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
+            //string userId = User.Identity.GetUserId();
+            //ApplicationUser currentUser = userManager.FindById(userId);
             string userId = User.Identity.GetUserId();
-            ApplicationUser currentUser = userManager.FindById(userId);
-            IEnumerable<Post> allPosts = currentUser.Posts.ToList();
+            //(from friendpost in db.Post where friendpost.UserId in
+            //     (from friend in db.Friend where (friend.UserId.CompareTo(userId) == 0) select friend.OtherUserId)
+            //select friendpost.userId).ToList();
+            var q = (from friendpost in db.Post join friend in db.Friend
+                          on friendpost.UserId equals friend.OtherUserId
+                      orderby friendpost.PostDate descending
+                      select friendpost).ToList().Distinct();
+
+            List<PostViewModel> allPosts = new List<PostViewModel>();
+
+
+            foreach (var item in q)
+            {
+                allPosts.Add(new PostViewModel()
+                {
+                    PostDate = item.PostDate,
+                    FirstName = userManager.FindById(item.UserId).FirstName,
+                    LastName = userManager.FindById(item.UserId).LastName,
+                    PostMessage = item.PostMessage
+                });
+            }
+
+            
 
             return View(allPosts);
         }

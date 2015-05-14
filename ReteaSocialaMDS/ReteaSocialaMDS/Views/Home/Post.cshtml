@@ -1,17 +1,22 @@
-﻿@model IEnumerable<ReteaSocialaMDS.Models.Post>
+﻿@model List<ReteaSocialaMDS.Models.PostViewModel>
 
 @{
     Layout = null;
 }
 
-    @foreach (var item in Model) 
-    { 
-        <div>
-            @item.PostDate
-            <br />
-            @item.UserId
-            <br />
-            @item.PostMessage
-           
+@foreach (var item in Model)
+    {
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                @item.PostDate
+                <br />
+                @item.FirstName
+
+                @item.LastName
+                <br />
+                @item.PostMessage
+
+            
+            </div>
         </div>
     }
