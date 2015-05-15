@@ -2,21 +2,39 @@
 
 @{
     Layout = null;
+    
 }
 
 @foreach (var item in Model)
     {
-        <div class="panel panel-primary">
-            <div class="panel-body">
+       
+        <div class="panel panel-group">
+            <div class="panel-footer">
                 @item.PostDate
-                <br />
+               
                 @item.FirstName
 
                 @item.LastName
-                <br />
-                @item.PostMessage
-
-            
             </div>
+            <div class="panel-body">
+                <br />
+               
+                 @item.PostMessage
+               
+                <hr class="alert-warning"/>
+                   
+                <br />
+                    @*@Html.Partial("AddComment", new ReteaSocialaMDS.Models.PostComment())*@
+
+                    @Html.Action("Comment", "Home", new { Parent = item.Id })
+
+                    @{Html.RenderAction("AddComment", "Home", new { Parent = item.Id});}
+
+
+                </div>
+            
         </div>
+        
     }
+
+

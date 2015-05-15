@@ -9,6 +9,9 @@ namespace ReteaSocialaMDS.Models
     public class PostViewModel
     {
 
+        
+        public int Id { get; set; }
+
         public DateTime PostDate { get; set; }
 
         public string FirstName { get; set; }

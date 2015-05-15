@@ -4,21 +4,23 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>PostViewModel</h4>
+        <h4>Wall</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(m => m.PostMessage, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.EditorFor(m => m.PostMessage, new { @class = "form-control" })
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.PostMessage, new { @class = "col-md-2 control-label" })
+            </div>
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.PostMessage, new { @class = "form-control", @style = "width:100%"})
 
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-3">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
-
         </div>
+
+            
+
     </div>
 }
