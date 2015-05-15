@@ -8,8 +8,18 @@ namespace ReteaSocialaMDS.Models
 {
     public class PostViewModel
     {
-        [Required]
-        [DataType(DataType.MultilineText)]
-        public string PostText;
+
+        
+        public int Id { get; set; }
+
+        public DateTime PostDate { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string PostMessage { get; set; }
+
+
     }
 }

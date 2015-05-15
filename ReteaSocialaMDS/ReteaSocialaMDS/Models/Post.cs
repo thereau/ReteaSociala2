@@ -19,6 +19,7 @@ namespace ReteaSocialaMDS.Models
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string PostMessage { get; set; }
 
         private DateTime? postDate;
