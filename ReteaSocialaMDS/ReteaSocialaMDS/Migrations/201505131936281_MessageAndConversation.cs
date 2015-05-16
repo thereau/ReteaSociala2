@@ -20,22 +20,22 @@ namespace ReteaSocialaMDS.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.SecondUserId, cascadeDelete: false)
                 .Index(t => t.FirstUserId)
                 .Index(t => t.SecondUserId);
-            
+
             CreateTable(
                 "dbo.Messages",
                 c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        ConversationId = c.Int(nullable: false),
-                        Text = c.String(),
-                        userTurn = c.Boolean(nullable: false),
-                    })
+                {
+                    Id = c.Int(nullable: false, identity: true),
+                    ConversationId = c.Int(nullable: false),
+                    Text = c.String(),
+                    userTurn = c.Boolean(nullable: false),
+                })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Conversations", t => t.ConversationId, cascadeDelete: true)
                 .Index(t => t.ConversationId);
-            
+
         }
-        
+       
         public override void Down()
         {
             DropForeignKey("dbo.Conversations", "SecondUserId", "dbo.AspNetUsers");

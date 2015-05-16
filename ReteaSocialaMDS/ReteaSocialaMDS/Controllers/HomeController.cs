@@ -199,7 +199,7 @@ namespace ReteaSocialaMDS.Controllers
                     
                     string currentUserId=User.Identity.GetUserId().ToString();
 
-                    Friend alreadyFriends = user.IsFriend.FirstOrDefault(fr=> fr.OtherUserId == currentUserId);
+                    Friend alreadyFriends = user.IsFriend.FirstOrDefault(fr=> fr.UserId== currentUserId);
                    
                     //trebuia sa fie invers dar nu mai conteaza
                     FriendRequest friendReqAlreadySent = user.SentFriendRequests.FirstOrDefault(fr => fr.FutureFriendUserId == currentUserId);
@@ -270,7 +270,7 @@ namespace ReteaSocialaMDS.Controllers
             
             string userId = User.Identity.GetUserId();
             ApplicationUser currentUser = userManager.FindById(userId);
-            IEnumerable<Post> allPosts=currentUser.Posts.ToList();
+            
             List<string> friendReq = (from fr in currentUser.SentFriendRequests select fr.FutureFriendUserId).ToList();
              
                 //(from fr in db.FriendRequest where (fr.UserId.CompareTo(userId) ==0 ) select fr.FutureFriendUserId).ToList();
@@ -286,6 +286,29 @@ namespace ReteaSocialaMDS.Controllers
             }
            
             return Json(futureFriends);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public JsonResult FriendsList()
+        {
+            var userStore = new UserStore<ApplicationUser>(db);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            string userId = User.Identity.GetUserId();
+            ApplicationUser currentUser = userManager.FindById(userId);
+
+            List<FriendListsViewModel> friends = new List<FriendListsViewModel>();
+
+            foreach(Friend fr in currentUser.FriendWith.ToList())
+                friends.Add(new FriendListsViewModel()
+                {
+                    FullName = string.Concat(fr.OtherUser.FirstName+" ",fr.OtherUser.LastName),
+                    userId = fr.OtherUserId
+                });
+            if(friends.Count==0)
+                return Json(null);
+            return Json(friends);
         }
         
         /// <summary>
@@ -313,14 +336,14 @@ namespace ReteaSocialaMDS.Controllers
                     return Json(null);
 
                 FriendRequest friendRequest =
-                    (from fr in currentUser.ReceivedFriendRequests where (fr.UserId == friendId && fr.FutureFriendUserId == userId) select fr).FirstOrDefault();
+                    (from fr in currentUser.SentFriendRequests where (fr.UserId == userId && fr.FutureFriendUserId == friendId) select fr).FirstOrDefault();
 
                 if (friendRequest == null)
                     return Json(null);
                 db.FriendRequest.Remove(friendRequest);
                 db.SaveChanges();
 
-
+                
 
 
             }
@@ -350,8 +373,9 @@ namespace ReteaSocialaMDS.Controllers
                 if (currentUser == null || friendUser == null)
                     return Json(null);
 
+
                 FriendRequest friendRequest =
-                    (from fr in currentUser.ReceivedFriendRequests where (fr.UserId == friendId && fr.FutureFriendUserId == userId) select fr).FirstOrDefault();
+                    (from fr in currentUser.SentFriendRequests where (fr.UserId == userId && fr.FutureFriendUserId == friendId) select fr).FirstOrDefault();
 
                 if (friendRequest == null)
                     return Json(null);
@@ -388,7 +412,7 @@ namespace ReteaSocialaMDS.Controllers
         [HttpPost]
         public ActionResult AddPost(Post newPost)
         {
-
+            
             newPost.UserId = User.Identity.GetUserId();
             newPost.PostDate = System.DateTime.Now;
 

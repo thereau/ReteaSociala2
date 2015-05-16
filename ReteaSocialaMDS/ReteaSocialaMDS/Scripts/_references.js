@@ -90,3 +90,4 @@
 /// <reference path="behaviors/masonry-isotope.js" />
 /// <reference path="behaviors/sausage.js" />
 /// <reference path="jquery.infinitescroll.js" />
+/// <reference path="jquery.signalr-2.2.0.min.js" />

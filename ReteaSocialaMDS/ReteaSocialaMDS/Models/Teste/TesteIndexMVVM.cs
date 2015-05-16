@@ -17,6 +17,7 @@ namespace ReteaSocialaMDS.Models.Teste
         public int Varsta { get; set; }
         public bool? Admin { get; set; }
         public bool EmailConfirmat { get; set; }
+        
         public int? VechimeForum { get; set; }
     }
 }
