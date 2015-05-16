@@ -9,6 +9,8 @@
 - pocket scroll effect on top looks nice!!!
 - chat system - (good job robert)
 - decide how home/index should look in the end (i.e. show only posts or combine with new photos, or separate posts and photos in tabs)
+- log off not working
+- friend only posts
 - pray to Lord because i have no idea how to unit test (maybe we hire a Chinese army to test our product)
 - Dumitran Hash AOE nerfed by 15
 - whatever the dark side wishes
