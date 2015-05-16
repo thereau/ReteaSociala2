@@ -38,9 +38,46 @@ namespace ReteaSocialaMDS.Controllers
             return View();
         }
 
+        [HttpPost]
         public ActionResult Search(string userName)
         {
-            return View();
+
+            return RedirectToAction("Search", new { userName = userName});
+        }
+
+        [HttpGet, ActionName("Search")]
+        public ActionResult DoSearch(string userName)
+        {
+            if (userName != null)
+            {
+                var userStore = new UserStore<ApplicationUser>(db);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                //TODO manipulate recieved string
+                string[] stringSeparators = new string[] { " " };
+                string[] names = userName.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+
+
+
+                var q = (from user in userStore.Users
+                         where
+                             (names.Any(s => user.LastName.ToLower().Contains(s.ToLower()) || user.FirstName.ToLower().Contains(s.ToLower()))
+                             )
+                         select user).ToList();
+
+                List<UserProfileViewModel> searchResult = new List<UserProfileViewModel>();
+
+                foreach (var item in q)
+                {
+                    searchResult.Add(new UserProfileViewModel()
+                    {
+                        firstName = item.FirstName,
+                        lastName = item.LastName,
+                        User = item.Id
+                    });
+                }
+                return View(searchResult);
+            }
+            return RedirectToAction("Index");
         }
 
         public ActionResult NewPost()

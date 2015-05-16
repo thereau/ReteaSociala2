@@ -1,0 +1,33 @@
+﻿@model List<ReteaSocialaMDS.Models.HomeViewModels.UserProfileViewModel>
+
+
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row  panel-group">
+
+    <h2 class="text-center">
+        Search results:
+    </h2>
+
+    <div class="col-md-12 text-center">
+        @if (Model != null) { 
+            foreach (var item in Model)
+            {
+                <h5 class="panel-body">
+
+                    @Html.ActionLink(string.Concat(item.firstName," ",item.lastName),string.Concat("UserProfile/",item.User), "Home")
+
+                </h5>
+            }
+        }
+
+    </div>
+
+</div>
+
+
+
