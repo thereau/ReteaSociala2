@@ -1,0 +1,6 @@
+C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\TesteC\TesteC\bin\Debug\TesteC.exe.config
+C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\TesteC\TesteC\obj\Debug\TesteC.csprojResolveAssemblyReference.cache
+C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\TesteC\TesteC\bin\Debug\TesteC.exe
+C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\TesteC\TesteC\bin\Debug\TesteC.pdb
+C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\TesteC\TesteC\obj\Debug\TesteC.exe
+C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\TesteC\TesteC\obj\Debug\TesteC.pdb
