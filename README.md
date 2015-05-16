@@ -1,8 +1,8 @@
 # ReteaSociala2
-- comment on posts
-- zoom photo click (maybe something like this)
+- comment on posts (done)
+- zoom photo click (maybe something like this http://dimsemenov.com/plugins/magnific-popup/)
 - make it easy for a user to delete his posts and photos
-- search users
+- search users (WOP simi)
 - if bored show suggestions for user search
 - sidebar
 - infinite scroll on posts
@@ -10,6 +10,6 @@
 - chat system - robert I trust you :D
 - decide how home/index should look in the end (i.e. show only posts or combine with new photos, or separate posts and photos in tabs)
 - pray to Lord because i have no idea how to unit test (maybe we hire a Chinese army to test our product)
-- nerf dumitran
+- Dumitran Hash AOE nerfed by 15
 - whatever the dark side wishes
 - more to come (not many hopefuly)
