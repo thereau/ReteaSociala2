@@ -1,39 +1,17 @@
-@model List<ReteaSocialaMDS.Models.PostViewModel>
+﻿@model IEnumerable<ReteaSocialaMDS.Models.Post>
 
 @{
     Layout = null;
-    
 }
 
-@foreach (var item in Model)
-    {
-       
-        <div class="panel panel-group">
-            <div class="panel-footer">
-                @item.PostDate
-               
-                @item.FirstName
-
-                @item.LastName
-            </div>
-            <div class="panel-body">
-                <br />
-               
-                 @item.PostMessage
-               
-                <hr class="alert-warning"/>
-                   
-                <br />
-                    @*@Html.Partial("AddComment", new ReteaSocialaMDS.Models.PostComment())*@
-
-                    @Html.Action("Comment", "Home", new { Parent = item.Id })
-
-                    @{Html.RenderAction("AddComment", "Home", new { Parent = item.Id});}
-
-
-                </div>
-            
+    @foreach (var item in Model) 
+    { 
+        <div>
+            @item.PostDate
+            <br />
+            @item.UserId
+            <br />
+            @item.PostMessage
+           
         </div>
-        
     }
-

@@ -38,46 +38,9 @@ namespace ReteaSocialaMDS.Controllers
             return View();
         }
 
-         [HttpPost]
         public ActionResult Search(string userName)
         {
-
-            return RedirectToAction("Search", new { userName = userName});
-        }
-
-        [HttpGet, ActionName("Search")]
-        public ActionResult DoSearch(string userName)
-        {
-            if (userName != null)
-            {
-                var userStore = new UserStore<ApplicationUser>(db);
-                var userManager = new UserManager<ApplicationUser>(userStore);
-                //TODO manipulate recieved string
-                string[] stringSeparators = new string[] { " " };
-                string[] names = userName.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-
-
-
-                var q = (from user in userStore.Users
-                         where
-                             (names.Any(s => user.LastName.ToLower().Contains(s.ToLower()) || user.FirstName.ToLower().Contains(s.ToLower()))
-                             )
-                         select user).ToList();
-
-                List<UserProfileViewModel> searchResult = new List<UserProfileViewModel>();
-
-                foreach (var item in q)
-                {
-                    searchResult.Add(new UserProfileViewModel()
-                    {
-                        firstName = item.FirstName,
-                        lastName = item.LastName,
-                        User = item.Id
-                    });
-                }
-                return View(searchResult);
-            }
-            return RedirectToAction("Index");
+            return View();
         }
 
         public ActionResult NewPost()
@@ -236,7 +199,7 @@ namespace ReteaSocialaMDS.Controllers
                     
                     string currentUserId=User.Identity.GetUserId().ToString();
 
-                    Friend alreadyFriends = user.IsFriend.FirstOrDefault(fr=> fr.OtherUserId == currentUserId);
+                    Friend alreadyFriends = user.IsFriend.FirstOrDefault(fr=> fr.UserId== currentUserId);
                    
                     //trebuia sa fie invers dar nu mai conteaza
                     FriendRequest friendReqAlreadySent = user.SentFriendRequests.FirstOrDefault(fr => fr.FutureFriendUserId == currentUserId);
@@ -307,7 +270,7 @@ namespace ReteaSocialaMDS.Controllers
             
             string userId = User.Identity.GetUserId();
             ApplicationUser currentUser = userManager.FindById(userId);
-            IEnumerable<Post> allPosts=currentUser.Posts.ToList();
+            
             List<string> friendReq = (from fr in currentUser.SentFriendRequests select fr.FutureFriendUserId).ToList();
              
                 //(from fr in db.FriendRequest where (fr.UserId.CompareTo(userId) ==0 ) select fr.FutureFriendUserId).ToList();
@@ -323,6 +286,29 @@ namespace ReteaSocialaMDS.Controllers
             }
            
             return Json(futureFriends);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public JsonResult FriendsList()
+        {
+            var userStore = new UserStore<ApplicationUser>(db);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            string userId = User.Identity.GetUserId();
+            ApplicationUser currentUser = userManager.FindById(userId);
+
+            List<FriendListsViewModel> friends = new List<FriendListsViewModel>();
+
+            foreach(Friend fr in currentUser.FriendWith.ToList())
+                friends.Add(new FriendListsViewModel()
+                {
+                    FullName = string.Concat(fr.OtherUser.FirstName+" ",fr.OtherUser.LastName),
+                    userId = fr.OtherUserId
+                });
+            if(friends.Count==0)
+                return Json(null);
+            return Json(friends);
         }
         
         /// <summary>
@@ -350,14 +336,14 @@ namespace ReteaSocialaMDS.Controllers
                     return Json(null);
 
                 FriendRequest friendRequest =
-                    (from fr in currentUser.ReceivedFriendRequests where (fr.UserId == friendId && fr.FutureFriendUserId == userId) select fr).FirstOrDefault();
+                    (from fr in currentUser.SentFriendRequests where (fr.UserId == userId && fr.FutureFriendUserId == friendId) select fr).FirstOrDefault();
 
                 if (friendRequest == null)
                     return Json(null);
                 db.FriendRequest.Remove(friendRequest);
                 db.SaveChanges();
 
-
+                
 
 
             }
@@ -387,8 +373,9 @@ namespace ReteaSocialaMDS.Controllers
                 if (currentUser == null || friendUser == null)
                     return Json(null);
 
+
                 FriendRequest friendRequest =
-                    (from fr in currentUser.ReceivedFriendRequests where (fr.UserId == friendId && fr.FutureFriendUserId == userId) select fr).FirstOrDefault();
+                    (from fr in currentUser.SentFriendRequests where (fr.UserId == userId && fr.FutureFriendUserId == friendId) select fr).FirstOrDefault();
 
                 if (friendRequest == null)
                     return Json(null);
@@ -425,7 +412,7 @@ namespace ReteaSocialaMDS.Controllers
         [HttpPost]
         public ActionResult AddPost(Post newPost)
         {
-
+            
             newPost.UserId = User.Identity.GetUserId();
             newPost.PostDate = System.DateTime.Now;
 
@@ -466,64 +453,7 @@ namespace ReteaSocialaMDS.Controllers
             return View(allPosts);
         }
 
-        [Authorize]
-        [HttpGet]
-        public ActionResult AddComment(int Parent)
-        {
-
-            return PartialView(new PostComment()
-            {
-                ParentPostId = Parent
-            });
-        }
         
-        [Authorize]
-        [HttpPost]
-        public ActionResult AddCommentRecieve(PostComment comment)
-        {
-            
-            comment.UserId = User.Identity.GetUserId();
-            comment.CommentPostDate = System.DateTime.Now;
-
-            db.PostComment.Add(comment);
-            db.SaveChanges();
-
-            return Redirect("/");
-        }
-
-        [Authorize]
-        public ActionResult Comment(int Parent)
-        {
-            var userStore = new UserStore<ApplicationUser>(db);
-            var userManager = new UserManager<ApplicationUser>(userStore);
-
-            var userId = User.Identity.GetUserId();
-
-
-            //var q = (from friendpost in db.Post
-            //         join friend in db.Friend
-            //             on friendpost.UserId equals friend.OtherUserId
-            //         orderby friendpost.PostDate descending
-            //         select friendpost).ToList().Distinct();
-
-            var q = (from comment in db.PostComment where (comment.ParentPostId == Parent) orderby comment.CommentPostDate select comment).ToList();
-
-            List<CommentViewModel> comments = new List<CommentViewModel>();
-
-            foreach (var item in q)
-            {
-                comments.Add(new CommentViewModel()
-                {
-                    PostDate = item.CommentPostDate,
-                    FirstName = userManager.FindById(item.UserId).FirstName,
-                    LastName = userManager.FindById(item.UserId).LastName,
-                    PostComment = item.PostCommentMessage
-                });
-            }
-
-
-            return View(comments);
-        }
 
     }
 }

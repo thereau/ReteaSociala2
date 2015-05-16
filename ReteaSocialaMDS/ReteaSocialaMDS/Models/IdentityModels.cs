@@ -70,6 +70,7 @@ namespace ReteaSocialaMDS.Models
     //We can use another database for this
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -97,6 +98,8 @@ namespace ReteaSocialaMDS.Models
 
             modelBuilder.Entity<Conversation>().HasRequired(m => m.FirstUser).WithMany(m => m.StartedBy);
             modelBuilder.Entity<Conversation>().HasRequired(m => m.SecondUser).WithMany(m => m.NotStartedBy);
+            
+            
         }
     }
 
