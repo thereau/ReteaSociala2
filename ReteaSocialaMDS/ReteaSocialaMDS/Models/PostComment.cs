@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -23,7 +23,7 @@ namespace ReteaSocialaMDS.Models
 
         [ForeignKey("ParentPostId")]
         public virtual Post ParentPost { get; set; }
-
+        [DataType(DataType.MultilineText)]
         public string PostCommentMessage { get; set; }
 
         private DateTime? commentPostDate;

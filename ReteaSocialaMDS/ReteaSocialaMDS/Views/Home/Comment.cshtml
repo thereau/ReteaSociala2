@@ -1,0 +1,31 @@
+@model List<ReteaSocialaMDS.Models.CommentViewModel>
+
+@{
+    Layout = null;
+
+}
+
+@foreach (var item in Model)
+{
+
+
+        <div class="panel-footer">
+            @item.PostDate
+
+            @item.FirstName
+
+            @item.LastName
+        </div>
+    //danger merge
+        <div class="panel-danger">
+            <br />
+            @item.PostComment
+            @*@Html.Partial("AddComment", new ReteaSocialaMDS.Models.PostComment())*@
+           
+            <hr style="border-color: #ffb27c"/>
+            
+        </div>
+
+
+
+}

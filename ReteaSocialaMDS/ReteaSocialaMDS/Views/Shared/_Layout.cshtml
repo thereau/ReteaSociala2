@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -33,7 +33,7 @@
                 <li>@Html.ActionLink("About", "About", "Home")</li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
             </ul>
-            @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @class = "navbar-form navbar-left", role = "search" }))
+            @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @class = "navbar-form navbar-left", role = "search", autocomplete = "off" }))
             {
                 @Html.AntiForgeryToken()
                 <div class="form-group">

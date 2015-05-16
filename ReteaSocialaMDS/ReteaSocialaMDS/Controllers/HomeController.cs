@@ -38,9 +38,46 @@ namespace ReteaSocialaMDS.Controllers
             return View();
         }
 
+         [HttpPost]
         public ActionResult Search(string userName)
         {
-            return View();
+
+            return RedirectToAction("Search", new { userName = userName});
+        }
+
+        [HttpGet, ActionName("Search")]
+        public ActionResult DoSearch(string userName)
+        {
+            if (userName != null)
+            {
+                var userStore = new UserStore<ApplicationUser>(db);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                //TODO manipulate recieved string
+                string[] stringSeparators = new string[] { " " };
+                string[] names = userName.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+
+
+
+                var q = (from user in userStore.Users
+                         where
+                             (names.Any(s => user.LastName.ToLower().Contains(s.ToLower()) || user.FirstName.ToLower().Contains(s.ToLower()))
+                             )
+                         select user).ToList();
+
+                List<UserProfileViewModel> searchResult = new List<UserProfileViewModel>();
+
+                foreach (var item in q)
+                {
+                    searchResult.Add(new UserProfileViewModel()
+                    {
+                        firstName = item.FirstName,
+                        lastName = item.LastName,
+                        User = item.Id
+                    });
+                }
+                return View(searchResult);
+            }
+            return RedirectToAction("Index");
         }
 
         public ActionResult NewPost()
@@ -429,7 +466,64 @@ namespace ReteaSocialaMDS.Controllers
             return View(allPosts);
         }
 
+        [Authorize]
+        [HttpGet]
+        public ActionResult AddComment(int Parent)
+        {
+
+            return PartialView(new PostComment()
+            {
+                ParentPostId = Parent
+            });
+        }
         
+        [Authorize]
+        [HttpPost]
+        public ActionResult AddCommentRecieve(PostComment comment)
+        {
+            
+            comment.UserId = User.Identity.GetUserId();
+            comment.CommentPostDate = System.DateTime.Now;
+
+            db.PostComment.Add(comment);
+            db.SaveChanges();
+
+            return Redirect("/");
+        }
+
+        [Authorize]
+        public ActionResult Comment(int Parent)
+        {
+            var userStore = new UserStore<ApplicationUser>(db);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            var userId = User.Identity.GetUserId();
+
+
+            //var q = (from friendpost in db.Post
+            //         join friend in db.Friend
+            //             on friendpost.UserId equals friend.OtherUserId
+            //         orderby friendpost.PostDate descending
+            //         select friendpost).ToList().Distinct();
+
+            var q = (from comment in db.PostComment where (comment.ParentPostId == Parent) orderby comment.CommentPostDate select comment).ToList();
+
+            List<CommentViewModel> comments = new List<CommentViewModel>();
+
+            foreach (var item in q)
+            {
+                comments.Add(new CommentViewModel()
+                {
+                    PostDate = item.CommentPostDate,
+                    FirstName = userManager.FindById(item.UserId).FirstName,
+                    LastName = userManager.FindById(item.UserId).LastName,
+                    PostComment = item.PostCommentMessage
+                });
+            }
+
+
+            return View(comments);
+        }
 
     }
 }
