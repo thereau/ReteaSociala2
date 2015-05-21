@@ -465,10 +465,16 @@ namespace ReteaSocialaMDS.Controllers
             //(from friendpost in db.Post where friendpost.UserId in
             //     (from friend in db.Friend where (friend.UserId.CompareTo(userId) == 0) select friend.OtherUserId)
             //select friendpost.userId).ToList();
-            var q = (from friendpost in db.Post join friend in db.Friend
+            var q1 = (from friendpost in db.Post join friend in db.Friend
                           on friendpost.UserId equals friend.OtherUserId
+                       
                       orderby friendpost.PostDate descending
+                      where friend.UserId.CompareTo(userId) == 0 || friendpost.UserId.CompareTo(userId) == 0
                       select friendpost).ToList().Distinct();
+
+            var q2 = (from friendpost in db.Post where friendpost.UserId.CompareTo(userId) == 0 select friendpost).ToList();
+
+            var q = q1.Union(q2).ToList().Distinct();
 
             List<PostViewModel> allPosts = new List<PostViewModel>();
 

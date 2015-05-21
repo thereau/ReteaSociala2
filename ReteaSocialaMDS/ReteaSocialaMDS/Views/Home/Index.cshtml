@@ -4,7 +4,7 @@
 }
 
 
-
+<div id='scrollbar' style="position: fixed;top: 0px;height: 2px;right:100%;width: 100%;background-color: #ff6a00;z-index: 3000;"></div>
 
 <div class="row">
     <div class="col-sm-4 ">
@@ -228,6 +228,25 @@
                 .fail(function() {
                     console.log("fail pt ajax method");
                 });
+
+            $(document).on('scroll', function () {
+
+                console.log('trafalet');
+
+                var height = $(document).height() - $(window).height();
+
+                var current = $(document).scrollTop();
+
+                var percent = current / height * 100;
+
+                //console.log(percent.toString());
+
+                $('#scrollbar').css({
+                    right: (100 - percent).toString() + '%'
+                });
+
+
+            });
            
 
         });
