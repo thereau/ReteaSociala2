@@ -83,3 +83,4 @@ C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSociala
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\bin\Microsoft.AspNet.SignalR.Core.xml
 C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\Robert-Stelian\Source\Repos\ReteaSociala22\ReteaSocialaMDS\ReteaSocialaMDS\obj\Debug\ReteaSocialaMDS.Migrations.AddGamesAndUserGames.resources

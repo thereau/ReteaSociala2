@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using ReteaSocialaMDS.Models.Teste;
 
 namespace ReteaSocialaMDS.Models
 {
@@ -54,7 +55,7 @@ namespace ReteaSocialaMDS.Models
         public virtual ICollection<Conversation> StartedBy { get; set; }
         public virtual ICollection<Conversation> NotStartedBy { get; set; }
 
-
+        public virtual ICollection<UserGame> UserGames { get; set; }
        
         
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -76,6 +77,7 @@ namespace ReteaSocialaMDS.Models
         {
         }
 
+         
         public DbSet<UserImage> UserImage { get; set; }
         public DbSet<Friend> Friend { get; set; }
         public DbSet<FriendRequest> FriendRequest { get; set; }
@@ -83,6 +85,8 @@ namespace ReteaSocialaMDS.Models
         public DbSet<PostComment> PostComment { get; set; }
         public DbSet<Conversation> Conversations { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Game> Game { get; set; }
+        public DbSet<UserGame> UserGame { get; set; }
 
         public static ApplicationDbContext Create()
         {

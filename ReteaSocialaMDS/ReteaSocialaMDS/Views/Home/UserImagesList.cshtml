@@ -1,10 +1,11 @@
-﻿@model IEnumerable<string>
+﻿@using ReteaSocialaMDS.Models
+@model IEnumerable<ReteaSocialaMDS.Models.UserImageViewModel>
 @{
     ViewBag.Title = "User Images List";
 }
 <style>
     .background-profil {
-    background-image:url(@Model.Skip(3).First());
+    background-image:url(@Model.Skip(3).First().ImageUrl.ToString());
     height: 300px;
     background-size: cover;
     }
@@ -23,13 +24,13 @@
     
 </style>
 
-<div class="container">
+<div class="container" id="UserImageList">
     <div class="row panel">
         <div class="col-md-4 background-profil"></div>
 
         
         <div class="col-md-8">
-            <img src="@Model.First()" class="img-rounded imagine-profil"/>
+            <img src="@Model.First().ImageUrl.ToString()" class="img-rounded imagine-profil"/>
             <div class="profile-information">
                 <h1>Gigel Apostolesei</h1>
                 <h2>Bucharest</h2>
@@ -43,15 +44,39 @@
     </div>
 
     <div class="masonry">
-        @foreach (var item in Model)
+        @foreach (UserImageViewModel item in Model)
         {
             <div class="post-box col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                <img class="img-responsive img-thumbnail" src="@item.ToString()"/>
+                <img class="img-responsive img-thumbnail" src="@item.ImageUrl.ToString()" id=@item.Id.ToString() />
             </div>
 
         }
     </div>
+@foreach (UserImageViewModel item in Model)
+{
+    <div class="modal fade" id=@String.Concat("image",@item.Id.ToString()) tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">@item.Title</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <img class="modal-images" src=@item.ImageUrl.ToString() />
+                        </div>
+                    </div>
+                    
 
+                </div>
+                <div class="modal-footer">
+                    @item.Description
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 
 </div>
@@ -59,10 +84,30 @@
 
 @section Scripts{
     <script type="text/javascript">
-        
+
         $("window").ready(function () {
 
-            
+
+            //$(".img-thumbnail").click(function () {
+            $(".masonry").on("click", "img", function () {
+                console.log($(this).attr("id"));
+
+                $("#image" + $(this).attr("id")).modal('toggle');
+                var $img = $("#image" + $(this).attr("id") + " .modal-images");
+                var img = $img[0];
+                console.log("dimensiunea este luata in activarea modalului: " + img.width);
+
+                var maxWidth = 850;
+                if (img.width > maxWidth) {
+                    var aspect = img.width / img.height;
+                    $img.css("width", maxWidth).css("height", maxWidth/aspect);
+
+                }
+                console.log($img);
+
+            });
+
+
             var numberOfImages = $(".img-thumbnail").length;
             console.log(numberOfImages);
 
@@ -88,32 +133,54 @@
                             console.log("in succes");
                             numberOfImages += 5;
                             var elements = [];
-                        $.each(result, function (key, value) {
-                            var elem = $("<div class=\"post-box col-xs-12 col-sm-4 col-md-4 col-lg-4\">" + "<img class=\"img-responsive img-thumbnail\" src=\"" + value + "\"" + "/></div>");
-                            
-                            console.log(elem);
-
-                            elements.push(elem);
+                            $.each(result, function (key, value) {
+                                var div = $("<div />", { "class": "post-box col-xs-12 col-sm-4 col-md-4 col-lg-4" });
+                                var img = $("<img />", { "class": "img-responsive img-thumbnail", "src": value["ImageUrl"] ,"id":value["Id"]});
+                                div.append(img);
 
 
-                        });
-                            
+                            console.log(div);
+
+                            elements.push(div);
+
+                            var modal = $("<div />", { "class": "modal fade", "id": "image" + value["Id"], "tabindex": "-1", "role": "dialog", "aria-labelledby": "myModalLabel", "aria-hidden": "true" });
+                            var modalDialog = $("<div />", { "class": "modal-dialog modal-lg" });
+                            var modalContent = $("<div />", { "class": "modal-content" });
+
+                            var modalHeader = $("<div />", { "class": "modal-header" });
+                            modalHeader.append($("<button />", { "class": "close", "data-dismiss": "modal", "aria-label": "Close" }).append($("<span />", { "aria-hidden": "true" }).append("&times;")));
+                            modalHeader.append($("<h4 />", { "class": "modal-title" }).append(value["Title"]));
+                                modalContent.append(modalHeader);
+                            var modalBody = $("<div />", { "class": "modal-body" });
+                             
+                            modalBody.append($("<div />", { "class": "row" }).append($("<div />", { "class": "col-xs-12" }).append($("<img />", { "class": "modal-images", "src": value["ImageUrl"] ,"id":value["Id"]}))));
+                                modalContent.append(modalBody);
+                            var modalFooter = $("<div />", { "class": "modal-footer" });
+                            modalFooter.append(value["Description"]);
+                            modalContent.append(modalFooter);
+                            modalDialog.append(modalContent);
+                            modal.append(modalDialog);
+                                $("#UserImageList").append(modal);
+
+                            });
+
                         $container.append(elements);
                         $container.imagesLoaded(function () {
-                           
+
                                 $container.masonry('reloadItems');
                                 $container.masonry('layout');
-                             
-                              
+
+
                             });
 
                         }
                 });
             });
-            
+
         });
-        
-       
+
+
+
 
     </script>
 }

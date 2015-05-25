@@ -77,7 +77,11 @@
         </div>
 
     </div>
+
+    <div class="col-sm-5 col-xs-12">
+
     <div class="col-sm-5">
+
 
         <div role="tabpanel">
 
@@ -114,11 +118,12 @@
 
     </div>
 
-    <div class="col-sm-3" id="chatBoxes">
-        
-    </div>
+    
 </div>
+<div class="col-sm-3" id="chatBoxes">
 
+</div>
+    </div>
 
 @section Scripts{
     <!--Reference the SignalR library. -->
@@ -344,7 +349,7 @@
                         var mesaj = $("input[id=" + id + "]").val();
                         $("input[id=" + id + "]").val("").focus();
 
-                        var mesajPrimit = $("<div />", { "class": "col-sm-12", "style": "padding-bottom: 10px" });
+                        var mesajPrimit = $("<div />", { "class": "col-sm-12", "style": "padding-bottom: 10px;text-align:right" });
                         var spanImg = $("<span />", { "class": "pull-right" });
                         spanImg.append($("<img />", { "class": "img-thumbnail img-rounded", "style": "height: 40px; width: 40px; border-radius: 20px; padding: 0px;", "src": "http://localhost:15128/Images/chatME.png" }));
                         mesajPrimit.append(spanImg);
@@ -361,7 +366,7 @@
                
             });
 
-
+            
         });
 
         

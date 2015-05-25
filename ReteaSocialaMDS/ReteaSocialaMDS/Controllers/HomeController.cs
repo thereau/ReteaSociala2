@@ -123,10 +123,20 @@ namespace ReteaSocialaMDS.Controllers
             var userManager = new UserManager<ApplicationUser>(userStore);
 
             ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
+            List<UserImageViewModel> imageList = new List<UserImageViewModel>();
 
-            IEnumerable<string> imgs = (from image in user.UserImages select Url.Content(image.ImageUrl)).Take(5).ToList();
 
-            return View(imgs);
+
+            foreach (UserImage img in user.UserImages.Take(5).ToList())
+                imageList.Add(new UserImageViewModel()
+                {
+                 Id = img.Id,
+                 Title = img.Title,
+                 Description = img.Description,
+                  ImageUrl = Url.Content(img.ImageUrl)
+                });
+
+            return View(imageList);
             
         }
 
@@ -139,9 +149,21 @@ namespace ReteaSocialaMDS.Controllers
 
             ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
 
-            IEnumerable<string> imgs = (from image in user.UserImages select Url.Content(image.ImageUrl)).Skip(skip).Take(5).ToList();
+            List<UserImageViewModel> imageList = new List<UserImageViewModel>();
+
+
+
+            foreach (UserImage img in user.UserImages.Skip(skip).Take(5).ToList())
+                imageList.Add(new UserImageViewModel()
+                {
+                    Id = img.Id,
+                    Title = img.Title,
+                    Description = img.Description,
+                    ImageUrl = Url.Content(img.ImageUrl)
+                });
+
             
-            return Json(imgs);
+            return Json(imageList);
 
         }
 
