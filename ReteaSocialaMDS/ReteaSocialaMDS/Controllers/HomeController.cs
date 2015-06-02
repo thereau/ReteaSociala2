@@ -496,6 +496,49 @@ namespace ReteaSocialaMDS.Controllers
             return View(allPosts);
         }
 
+        [Authorize]
+        [HttpPost]
+        public JsonResult InfiniteScrollPosts(int blockNumber)
+        {
+            var userStore = new UserStore<ApplicationUser>(db);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            string userId = User.Identity.GetUserId();
+
+            var q1 = (from friendpost in db.Post join friend in db.Friend
+                          on friendpost.UserId equals friend.OtherUserId
+                       
+                      orderby friendpost.PostDate descending
+                      where friend.UserId.CompareTo(userId) == 0 || friendpost.UserId.CompareTo(userId) == 0
+                      select friendpost).ToList().Distinct();
+
+            var q2 = (from friendpost in db.Post where friendpost.UserId.CompareTo(userId) == 0 select friendpost).ToList();
+
+            var q = q1.Union(q2).ToList().Distinct();
+
+
+            const int blockSize = 5;
+
+            List<PostViewModel> blockPosts = new List<PostViewModel>();
+
+            foreach (var item in q)
+            {
+                blockPosts.Add(new PostViewModel()
+                {
+                    Id = item.Id,
+                    PostDate = item.PostDate,
+                    FirstName = userManager.FindById(item.UserId).FirstName,
+                    LastName = userManager.FindById(item.UserId).LastName,
+                    PostMessage = item.PostMessage
+                });
+            }
+
+            
+
+            return Json(blockPosts.GetRange(blockNumber * blockSize, (blockNumber + 1) * blockSize - 1));
+            
+        }
+
 
         [Authorize]
         [HttpGet]

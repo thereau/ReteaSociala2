@@ -110,7 +110,10 @@
                 HtmlFieldPrefix = "Post"
             }
         })*@
-        @Html.Action("Post", "Home")
+        <div id="Posts">
+            @Html.Action("Post", "Home")
+        </div>
+
 
     </div>
 
@@ -231,7 +234,6 @@
 
             $(document).on('scroll', function () {
 
-                console.log('trafalet');
 
                 var height = $(document).height() - $(window).height();
 
@@ -239,12 +241,28 @@
 
                 var percent = current / height * 100;
 
-                //console.log(percent.toString());
-
                 $('#scrollbar').css({
                     right: (100 - percent).toString() + '%'
                 });
 
+                //if we reach dead end, ask for more
+                if(percent == 100){
+                    console.log('vreau mai multe postari!!');
+
+                    $.ajax({
+                        url: "/Home/null",
+                        method: "POST"
+                    }).done(function (data) {
+                        $.each(data, function (key, value) {
+
+                             
+
+                            $('#Posts').append(
+                                  
+                            );
+                        });
+                    });
+                }
 
             });
            

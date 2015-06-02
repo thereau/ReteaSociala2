@@ -26,8 +26,9 @@
                 <br />
                     @*@Html.Partial("AddComment", new ReteaSocialaMDS.Models.PostComment())*@
 
+                
                     @Html.Action("Comment", "Home", new { Parent = item.Id })
-
+                
                     @{Html.RenderAction("AddComment", "Home", new { Parent = item.Id});}
 
 
@@ -36,5 +37,4 @@
         </div>
         
     }
-
 

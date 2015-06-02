@@ -266,6 +266,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CheckDate.cs" />
+    <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\Friend.cs" />
@@ -524,7 +525,9 @@
     <Content Include="Views\Home\UserProfile.cshtml" />
     <Content Include="Views\Home\AddPost.cshtml" />
     <Content Include="Views\Home\Post.cshtml" />
-    <Content Include="Views\Home\Posts.cshtml" />
+    <Content Include="Views\Home\AddComment.cshtml" />
+    <Content Include="Views\Home\Comment.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
