@@ -5,7 +5,7 @@
 }
 <style>
     .background-profil {
-    background-image:url(@Model.Skip(3).First().ImageUrl.ToString());
+    background-image:url(@Model.First().ImageUrl.ToString());
     height: 300px;
     background-size: cover;
     }
@@ -32,10 +32,12 @@
         <div class="col-md-8">
             <img src="@Model.First().ImageUrl.ToString()" class="img-rounded imagine-profil"/>
             <div class="profile-information">
-                <h1>Gigel Apostolesei</h1>
+                
+                
+                <h1>@ViewBag.Nume</h1>
                 <h2>Bucharest</h2>
-                <p>Ceva ceva ceva ceva ceva ceva ceva ceva ceva</p>
-                <p>Atlceva Atlceva Atlceva Atlceva Atlceva Atlceva Atlceva Atlceva Atlceva Atlceva Atlceva Atlceva </p>
+                <p>@ViewBag.Detalii</p>
+               
             </div>
         </div>
     </div>

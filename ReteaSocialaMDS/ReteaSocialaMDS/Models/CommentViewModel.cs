@@ -6,10 +6,10 @@ using System.Web;
 
 namespace ReteaSocialaMDS.Models
 {
-    public class PostViewModel
+    public class CommentViewModel
     {
 
-        
+
         public int Id { get; set; }
 
         public DateTime PostDate { get; set; }
@@ -18,7 +18,7 @@ namespace ReteaSocialaMDS.Models
 
         public string LastName { get; set; }
 
-        public string PostMessage { get; set; }
+        public string PostComment { get; set; }
 
 
     }

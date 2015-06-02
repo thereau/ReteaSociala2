@@ -38,9 +38,46 @@ namespace ReteaSocialaMDS.Controllers
             return View();
         }
 
+        [HttpPost]
         public ActionResult Search(string userName)
         {
-            return View();
+
+            return RedirectToAction("Search", new { userName = userName });
+        }
+
+        [HttpGet, ActionName("Search")]
+        public ActionResult DoSearch(string userName)
+        {
+            if (userName != null)
+            {
+                var userStore = new UserStore<ApplicationUser>(db);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                //TODO manipulate recieved string
+                string[] stringSeparators = new string[] { " " };
+                string[] names = userName.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+
+
+
+                var q = (from user in userStore.Users
+                         where
+                             (names.Any(s => user.LastName.ToLower().Contains(s.ToLower()) || user.FirstName.ToLower().Contains(s.ToLower()))
+                             )
+                         select user).ToList();
+
+                List<UserProfileViewModel> searchResult = new List<UserProfileViewModel>();
+
+                foreach (var item in q)
+                {
+                    searchResult.Add(new UserProfileViewModel()
+                    {
+                        firstName = item.FirstName,
+                        lastName = item.LastName,
+                        User = item.Id
+                    });
+                }
+                return View(searchResult);
+            }
+            return RedirectToAction("Index");
         }
 
         public ActionResult NewPost()
@@ -124,7 +161,8 @@ namespace ReteaSocialaMDS.Controllers
 
             ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
             List<UserImageViewModel> imageList = new List<UserImageViewModel>();
-
+            ViewBag.Nume = user.FirstName + " " + user.LastName;
+            ViewBag.Detalii = user.Email;
 
 
             foreach (UserImage img in user.UserImages.Take(5).ToList())
@@ -241,7 +279,7 @@ namespace ReteaSocialaMDS.Controllers
                     
             }
 
-             
+            
             return View(model);
         }
 
@@ -423,18 +461,18 @@ namespace ReteaSocialaMDS.Controllers
             }
             return Json(1);
         }
-        [Authorize]
-        [HttpGet]
-        public ActionResult AddPost()
-        {
-            return View(new Post());
-        }
+        //[Authorize]
+        //[HttpGet]
+        //public ActionResult AddPost()
+        //{
+        //    return View(new Post());
+        //}
 
         [Authorize]
         [HttpPost]
         public ActionResult AddPost(Post newPost)
         {
-            
+
             newPost.UserId = User.Identity.GetUserId();
             newPost.PostDate = System.DateTime.Now;
 
@@ -468,11 +506,102 @@ namespace ReteaSocialaMDS.Controllers
             var userStore = new UserStore<ApplicationUser>(db);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
+            //string userId = User.Identity.GetUserId();
+            //ApplicationUser currentUser = userManager.FindById(userId);
             string userId = User.Identity.GetUserId();
-            ApplicationUser currentUser = userManager.FindById(userId);
-            IEnumerable<Post> allPosts = currentUser.Posts.ToList();
+            //(from friendpost in db.Post where friendpost.UserId in
+            //     (from friend in db.Friend where (friend.UserId.CompareTo(userId) == 0) select friend.OtherUserId)
+            //select friendpost.userId).ToList();
+            var q1 = (from friendpost in db.Post
+                      join friend in db.Friend
+                          on friendpost.UserId equals friend.OtherUserId
+
+                      orderby friendpost.PostDate descending
+                      where friend.UserId.CompareTo(userId) == 0 || friendpost.UserId.CompareTo(userId) == 0
+                      select friendpost).ToList().Distinct();
+
+            var q2 = (from friendpost in db.Post where friendpost.UserId.CompareTo(userId) == 0 select friendpost).ToList();
+
+            var q = q1.Union(q2).ToList().Distinct();
+
+            List<PostViewModel> allPosts = new List<PostViewModel>();
+
+
+            foreach (var item in q)
+            {
+                allPosts.Add(new PostViewModel()
+                {
+                    Id = item.Id,
+                    PostDate = item.PostDate,
+                    FirstName = userManager.FindById(item.UserId).FirstName,
+                    LastName = userManager.FindById(item.UserId).LastName,
+                    PostMessage = item.PostMessage
+                });
+            }
+
+
 
             return View(allPosts);
+        }
+
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult AddComment(int Parent)
+        {
+
+            return PartialView(new PostComment()
+            {
+                ParentPostId = Parent
+            });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult AddCommentRecieve(PostComment comment)
+        {
+
+            comment.UserId = User.Identity.GetUserId();
+            comment.CommentPostDate = System.DateTime.Now;
+
+            db.PostComment.Add(comment);
+            db.SaveChanges();
+
+            return Redirect("/");
+        }
+
+        [Authorize]
+        public ActionResult Comment(int Parent)
+        {
+            var userStore = new UserStore<ApplicationUser>(db);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            var userId = User.Identity.GetUserId();
+
+
+            //var q = (from friendpost in db.Post
+            //         join friend in db.Friend
+            //             on friendpost.UserId equals friend.OtherUserId
+            //         orderby friendpost.PostDate descending
+            //         select friendpost).ToList().Distinct();
+
+            var q = (from comment in db.PostComment where (comment.ParentPostId == Parent) orderby comment.CommentPostDate select comment).ToList();
+
+            List<CommentViewModel> comments = new List<CommentViewModel>();
+
+            foreach (var item in q)
+            {
+                comments.Add(new CommentViewModel()
+                {
+                    PostDate = item.CommentPostDate,
+                    FirstName = userManager.FindById(item.UserId).FirstName,
+                    LastName = userManager.FindById(item.UserId).LastName,
+                    PostComment = item.PostCommentMessage
+                });
+            }
+
+
+            return View(comments);
         }
 
         
